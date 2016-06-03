@@ -18,7 +18,6 @@ class Field extends Content {
 
     public function index(){
         $model_id = $this->isG('model_id', '请选择您要查看的模型字段');
-
         $param = ['field_model_id' => $model_id];
         $condition = 'field_model_id = :field_model_id';
         if(!empty($_GET['keyword'])){

@@ -39,7 +39,6 @@ class Content extends \App\Ticket\Common {
     public function index() {
         $condition = "";
         $param = array();
-
         //排序条件
         $orderBy = "{$this->fieldPrefix}id DESC";
         foreach ($this->field as $key => $value) {
@@ -67,6 +66,11 @@ class Content extends \App\Ticket\Common {
         $page->handle();
         $list = $this->db($this->table)->where($condition)->order($orderBy)->limit("{$page->firstRow}, {$page->listRows}")->select($param);
         $show = $page->show();
+
+        if($this->model['model_name'] == "User"){
+            $users_list = $this->db('user')->where("user_status=1")->field("user_id,user_name")->select();
+            $this->assign('users_list', $users_list);
+        }
         $this->assign('page', $show);
         $this->assign('list', $list);
         $this->assign('title', $this->model['model_title']);

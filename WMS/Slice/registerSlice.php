@@ -39,7 +39,7 @@ InitSlice::any('Ticket', ['\Ticket\Login', '\Ticket\Auth'], ['Ticket-Login']);
 InitSlice::get('Ticket', ['\Ticket\Menu'], ['Ticket-Login']);
 
 //注册自动更新用户组字段的信息
-InitSlice::any(['Ticket-User', 'Ticket-User_group'], ['\Ticket\UpdateField\UpdateUserGroupField']);
+InitSlice::any(['Ticket-User', 'Ticket-User_group'], ['\Ticket\UpdateField\UpdateUserGroupField', '\Ticket\UpdateField\UpdateUserField']);
 //注册自动更新用户组字段的信息
 InitSlice::any(['Ticket-Node'], ['\Ticket\UpdateField\UpdateNodeParentField']);
 

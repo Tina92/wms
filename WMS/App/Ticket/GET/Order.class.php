@@ -28,8 +28,25 @@ class Order extends \App\Ticket\Common
     /**
      * 新增工单
      */
-    public function add()
+    public function add1()
     {
         $this->layout();
     }
+
+    /**
+     * 新增工单
+     */
+    public function add2()
+    {
+        $this->layout();
+    }
+
+    /**
+     * 新增工单
+     */
+    public function add3()
+    {
+        $this->layout();
+    }
+
 }
