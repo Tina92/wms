@@ -24,6 +24,7 @@ class UpdateUserField extends \Core\Slice\Slice{
     public function after() {
         $userList = \Model\Content::listContent(['table' => 'user']);
         $user = [];
+        $user['顶级管理员'] = "0";
         foreach($userList as $value){
             $user[$value['user_name']] = $value['user_id'];
         }
