@@ -18,16 +18,16 @@
 		<div class="am-g" style="margin-bottom: 0;">
 			<div class="am-u-sm-6 ">
 				<div class="am-u-sm-4">紧迫程度</div>
-				<input type="radio" id="first" name="degree" />
-				<label for="first">紧急</label>
-				<input type="radio" id="second" name="degree" />
-				<label for="second">重要</label>
-				<input type="radio" id="third" name="degree" />
+				<input type="radio" id="third" name="degree" value="0" checked />
 				<label for="third">一般</label>
+				<input type="radio" id="second" name="degree" value="1" />
+				<label for="second">重要</label>
+				<input type="radio" id="first" name="degree" value="2" />
+				<label for="first">紧急</label>
 			</div>
 			<div class="am-u-sm-6 data">
 				<div class="am-u-sm-2">上线时间</div>
-				<input  class="Wdate" type="text" onClick="WdatePicker()" style="width: 35%;">
+				<input  class="Wdate" type="text" onClick="WdatePicker({minDate:'%y-%M-%d'})" style="width: 35%;">
 			</div>
 		</div>
 		<div class="am-g am-u-sm-12">
@@ -60,11 +60,11 @@
 		    	</div>
 		    	<div class="am-u-sm-9">
 		    		<div class="am-u-sm-5">
-		    		<input  class="Wdate" type="text" onClick="WdatePicker()">
+		    		<input id="d4311" class="Wdate" type="text" onClick="WdatePicker({minDate:'%y-%M-%d',maxDate:'#F{$dp.$D(\'d4312\')}'})">
 		    		</div>
 		    		<div class="am-u-sm-1">~</div>
 		    		<div class="am-u-sm-5">
-		    		<input  class="Wdate" type="text" onClick="WdatePicker()">
+		    		<input id="d4312" class="Wdate" type="text" onClick="WdatePicker({minDate:'#F{$dp.$D(\'d4311\')||\'%y-%M-%d\'}'})">
 		    		</div>
 		    	</div>
 		    </div>
