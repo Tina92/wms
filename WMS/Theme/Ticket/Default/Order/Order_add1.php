@@ -103,7 +103,7 @@
         });
         $(document).on("change","input[type='checkbox']",function(){
         	if($(this).hasClass("hd")){
-	        	if($(this).get(0).checked){
+	        	if($(".hd").eq(0).get(0).checked||$(".hd").eq(1).get(0).checked){
 	        		$('.Schedules').show();
 	        	}else{
 	        		$('.Schedules').hide();
