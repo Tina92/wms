@@ -1,0 +1,19 @@
+/***按钮***/
+li.am-cf{
+    line-height: 3rem;
+    .am-u-sm-3{
+        padding:0;
+        text-align:center;
+        .am-btn{
+        font-size: 0.6rem;
+        padding: 0.2rem;
+        display: block;
+        float: left;
+        margin: 0.65rem 1rem 0.65rem 2rem;
+        }
+    }
+    .am-u-sm-2{
+        padding: 0;
+        text-align: center;
+    }
+} 
