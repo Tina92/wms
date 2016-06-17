@@ -40,7 +40,7 @@ class User_group extends Content {
             $this->db('node_group')->insert([
                 'user_group_id' => $id,
                 'node_id' => $value
-            ]); echo 1;exit;
+            ]);
         }
         $this->success('更新成功!', $this->url(GROUP.'-'.MODULE.'-index'));
     }

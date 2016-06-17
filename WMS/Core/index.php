@@ -25,6 +25,8 @@ defined('PES_PATH') or define('PES_PATH', dirname(dirname(__FILE__)) . '/');
 
 defined('PES_CORE') or define('PES_CORE', dirname(__FILE__) . '/');
 
+
+
 /**
  * 由于没有找到解决方法
  * 此处直接使用thinkphp的源码，感谢！
