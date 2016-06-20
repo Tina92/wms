@@ -62,13 +62,16 @@ class Order extends \App\Ticket\Common
             $data['attachment']         = $file_name;
         }
         $data['add_time'] = date("Y-m-d H:i:s");
-        if($upload){
-            $res = \Model\OrderModel::saveWorkOrder($data);
-        }
+        $res = \Model\OrderModel::saveWorkOrder($data);
+
         if($res){
             $this->success('提交成功!', $this->url('Ticket-Order-index'));
         }else{
             $this->error('保存失败!请刷新后重试!');
         }
+    }
+
+    public function getOrderListByPage(){
+
     }
 }

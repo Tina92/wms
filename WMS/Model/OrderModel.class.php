@@ -20,47 +20,94 @@ class OrderModel extends \Core\Model\Model {
         return $result;
     }
 
-    public function getUserOrderList($user_id, $user_group_id=0, $page1=1, $page2=1, $page_num=10){
-        $page_1 = ($page1-1)*$page_num;
-        $page_2 = ($page2-1)*$page_num;
-        switch($user_group_id){
-            case 0 :
+    /**
+     * 获取对应用户的对应状态的工单列表
+     * @param $user_id              用户ID
+     * @param int $user_group_id    用户组ID    A/B/C/D    技术部领导/技术部成员/用户部领导/用户部成员
+     * @param int $user_boss        上级领导ID
+     * @param int $type             工单状态    0->未审核；1->已审核；2->已完成
+     * @param int $page             当前页数
+     * @param int $page_num         每页数量
+     * @return bool
+     */
+    public function getUserOrderList($user_id, $user_group_id=0, $user_boss=0, $type = 0, $page=1, $page_num=10){
+        $page_start = ($page-1)*$page_num;
+        $where = "1 ";
+        if($user_group_id == 1){
+            if(isset($type)){
+                switch($type){
+                    case 0 :
+                        $where .= "AND verify_type = 1 ";
+                        break;
+                    case 1 :
+                        $where .= "AND verify_type = 3 ";
+                        break;
+                    case 2:
+                        $where .= "AND verify_type in('2','4','5') ";
+                        break;
+                }
+            }
+        }elseif($user_group_id == 2){
 
-                break;
-            case 1 :
-                $arra = $this->getAllOrder();
-
-                break;
-            case 2 :
-
-                break;
-            default :
-                $arra = $this->getMyOrderList($user_id,$page_1,$page_num);
-                break;
+        }elseif($user_group_id > 0){
+            if($user_boss>0){
+                if(isset($type)){
+                    switch($type){
+                        case 0 :
+                            $where .= "AND verify_type in('0','1') ";
+                            break;
+                        case 1 :
+                            $where .= "AND verify_type = 3 ";
+                            break;
+                        case 2:
+                            $where .= "AND verify_type in('2','4','5') ";
+                            break;
+                    }
+                }
+                if(isset($user_id) && !empty($user_id)){
+                    $where .= "AND applicants_id = ".$user_id." ";
+                }
+            }else{
+                if(isset($type)){
+                    switch($type){
+                        case 0 :
+                            $where .= "AND verify_type = 0 ";
+                            break;
+                        case 1 :
+                            $where .= "AND verify_type in('1','3') ";
+                            break;
+                        case 2:
+                            $where .= "AND verify_type in('2','4','5') ";
+                            break;
+                    }
+                }
+                $where .= "AND applicants_dep_id = ".$user_group_id." ";
+            }
         }
-
-
-
+        $result = self::getOrderByWCPP($where,$page_start,$page_num);
+        return $result;
     }
 
-    public function getAllOrder(){
-
-    }
-
-    public function getMyOrderList($user_id = 0,$start,$page_num=10){
-        if($user_id > 0){
-            $result = self::db('work_order')
-                ->where("applicants_id = :user_id")
-                ->order('id DESC')
-                ->limit($start,$page_num)
-                ->select(array('user_id' => $user_id));
-        }
-        if($result){
-            return $result;
+    /**
+     * 按照条件查询信息
+     * @param $where
+     * @param $page_start
+     * @param $page_num
+     * @return bool
+     */
+    public function getOrderByWCPP($where,$page_start,$page_num){
+        $res = self::db('work_order')
+            ->where($where)
+            ->order('id DESC')
+            ->limit("{$page_start},{$page_num}")
+            ->select();
+        if($res){
+            return $res;
         }else{
             return false;
         }
     }
+
 
     /**
      * @param $data
