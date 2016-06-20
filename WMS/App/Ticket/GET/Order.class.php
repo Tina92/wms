@@ -29,9 +29,10 @@ class Order extends \App\Ticket\Common
         $order_listA = \Model\OrderModel::getUserOrderList($ui, $ut, $ub, 0, 1, 10);
         $order_listB = \Model\OrderModel::getUserOrderList($ui, $ut, $ub, 1, 1, 10);
         $order_listC = \Model\OrderModel::getUserOrderList($ui, $ut, $ub, 2, 1, 10);
-        $this->assign('new',$order_listA);
-        $this->assign('now',$order_listB);
-        $this->assign('end',$order_listC);
+        $this->assign('new',$order_listA['data']);
+        $this->assign('now',$order_listB['data']);
+        $this->assign('end',$order_listC['data']);
+        $this->assign('count',array("new"=>$order_listA['count'],"now"=>$order_listB['count'],"end"=>$order_listC['count']));
         $this->layout();
     }
 

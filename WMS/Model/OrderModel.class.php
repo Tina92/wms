@@ -96,15 +96,16 @@ class OrderModel extends \Core\Model\Model {
      * @return bool
      */
     public function getOrderByWCPP($where,$page_start,$page_num){
-        $res = self::db('work_order')
+        $res['data'] = self::db('work_order')
             ->where($where)
             ->order('id DESC')
             ->limit("{$page_start},{$page_num}")
             ->select();
+        $res['count'] = count(self::db('work_order')->where($where)->select());
         if($res){
             return $res;
         }else{
-            return false;
+            return array('count'=>0,'data'=>false);
         }
     }
 
