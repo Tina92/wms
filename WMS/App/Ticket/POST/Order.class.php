@@ -1,23 +1,25 @@
 <?php
 /**
  * Created by PhpStorm.
- * User: Administrator
+ * User: YaoJie
  * Date: 2016/6/7
  * Time: 09:29
  */
 namespace App\Ticket\POST;
-use App\Ticket\DELETE\Model;
 
 /**
  * 工单
  * Class Order
- * @package App\Ticket\GET
+ * @package App\Order\POST
  */
 class Order extends \App\Ticket\Common
 {
     public $config;
+    public $user;
     public function __init() {
         $this->config = require PES_PATH . 'Config/config.php';
+        $this->user = $_SESSION['ticket'];
+        $this->user['group_name'] = $this->db('user_group')->field('user_group_name')->where("user_group_id=:user_group_id")->find(array('user_group_id'=>$user['user_group_id']))['user_group_name'];
     }
     public function index()
     {
@@ -72,6 +74,20 @@ class Order extends \App\Ticket\Common
     }
 
     public function getOrderListByPage(){
-
+        if(!empty($_SERVER['HTTP_X_REQUESTED_WITH'])){
+            $ui = isset($this->user['user_id']) ? (empty($this->user['user_id']) ? 0 : intval($this->user['user_id'])) : 0;
+            $ut = isset($this->user['user_group_id']) ? (empty($this->user['user_group_id']) ? 0 : intval($this->user['user_group_id'])) : 0;
+            $ub = isset($this->user['user_boss']) ? (empty($this->user['user_boss']) ? 0 : intval($this->user['user_boss'])) : 0;
+            $pa = isset($_POST['page']) ? intval($_POST['page']) : 1;
+            $tp = isset($_POST['type']) ? $_POST['type'] : 0;
+            $order_list = \Model\OrderModel::getUserOrderList($ui, $ut, $ub, $tp, $pa, 10);
+            if($order_list){
+                $data['state'] = true;
+                $data['data'] = $order_list;
+                echo(json_encode($data));
+            }else{
+                echo(json_encode(array('state'=>false)));
+            }
+        }
     }
 }
