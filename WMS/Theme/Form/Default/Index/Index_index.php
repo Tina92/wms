@@ -15,11 +15,11 @@
     </div>
 
     <div class="am-u-sm-6 am-u-sm-centered">
-        <form action="/?" method="GET" data-am-validator>
+        <form action="<?= $label->url('Order-info') ?>" method="GET" data-am-validator>
             <input type="hidden" name="m" value="Order" />
-            <input type="hidden" name="a" value="info">
+            <input type="hidden" name="a" value="Info">
             <div class="am-input-group ">
-                <input type="text" name="number" class="am-form-field" required placeholder="填入工单号，查看工单详细信息  (例：ASAF146638700032)">
+                <input type="text" name="order_sn" class="am-form-field" required placeholder="填入工单号，查看工单详细信息  (例：ASAF146638700032)">
             <span class="am-input-group-btn">
                 <button class="am-btn am-btn-default" type="submit">查看</button>
             </span>

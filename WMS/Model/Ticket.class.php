@@ -148,6 +148,7 @@ class Ticket extends \Core\Model\Model {
      * @return array 返回处理好得通用数组
      */
     public static function view() {
+        echo 123;exit;
         $number = self::isG('number', '请选择您要查看的工单');
         $ticket = \Model\Content::findContent('ticket', $number, 'ticket_number');
         if (empty($ticket)) {

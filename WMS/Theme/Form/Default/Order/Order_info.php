@@ -1,0 +1,1 @@
+<?php require THEME . '/Ticket/Default/Order/order_info.php'; ?>
