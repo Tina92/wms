@@ -102,7 +102,7 @@ class OrderModel extends \Core\Model\Model {
             ->limit("{$page_start},{$page_num}")
             ->select();
         $count = count(self::db('work_order')->where($where)->select());
-        $res['count'] = $count/10+($count%10==0?0:1);
+        $res['count'] = ceil($count/10);//取得当前总页数
         if($res){
             return $res;
         }else{

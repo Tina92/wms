@@ -36,6 +36,11 @@ class Order extends \App\Ticket\Common
         $this->layout();
     }
 
+    public function info(){
+        $guid = $this->isG("order_id");
+        $this->layout();
+    }
+
     /**
      * 新增工单首页
      */
