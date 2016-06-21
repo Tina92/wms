@@ -21,6 +21,7 @@ class Order extends \App\Ticket\Common
         $this->user = $_SESSION['ticket'];
         $this->user['group_name'] = $this->db('user_group')->field('user_group_name')->where("user_group_id=:user_group_id")->find(array('user_group_id'=>$user['user_group_id']))['user_group_name'];
     }
+
     public function index()
     {
         $data['order_type']         = $this->isP('order_type', '系统参数错误，请重新打开提交工单页面再试');

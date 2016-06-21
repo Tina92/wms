@@ -194,7 +194,7 @@
         }
     });
     $(".page2").createPage({
-        pageCount:<?php echo $count['new']?>,
+        pageCount:<?php echo $count['now']?>,
         current:1,
         backFn:function(p){
             $.ajax({
@@ -216,7 +216,7 @@
         }
     });
     $(".page3").createPage({
-        pageCount:<?php echo $count['new']?>,
+        pageCount:<?php echo $count['end']?>,
         current:1,
         backFn:function(p){
             $.ajax({
