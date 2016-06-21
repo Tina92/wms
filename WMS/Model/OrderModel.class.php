@@ -84,7 +84,7 @@ class OrderModel extends \Core\Model\Model {
                 $where .= "AND applicants_dep_id = ".$user_group_id." ";
             }
         }
-        $result = self::getOrderByWCPP($where,$page_start,$page_num);
+        $result = self::getOrderByWPP($where,$page_start,$page_num);
         return $result;
     }
 
@@ -95,13 +95,14 @@ class OrderModel extends \Core\Model\Model {
      * @param $page_num
      * @return bool
      */
-    public function getOrderByWCPP($where,$page_start,$page_num){
+    public function getOrderByWPP($where,$page_start,$page_num){
         $res['data'] = self::db('work_order')
             ->where($where)
             ->order('id DESC')
             ->limit("{$page_start},{$page_num}")
             ->select();
-        $res['count'] = count(self::db('work_order')->where($where)->select());
+        $count = count(self::db('work_order')->where($where)->select());
+        $res['count'] = $count/10+($count%10==0?0:1);
         if($res){
             return $res;
         }else{
@@ -109,8 +110,8 @@ class OrderModel extends \Core\Model\Model {
         }
     }
 
-
     /**
+     * 提交保存工单信息
      * @param $data
      * @return mixed
      */
@@ -120,6 +121,54 @@ class OrderModel extends \Core\Model\Model {
             self::error('工单保存失败');
         }
         return $result;
+    }
+
+    /**
+     * 领导审核
+     * @param int $boss_id
+     * @param $order_id
+     * @param int $verify
+     */
+    public function bossVerify($boss_id,$order_id,$verify=0){
+        if(!empty(intval($order_id))){
+            $boss_id = empty($boss_id) ? $_SESSION['ticket']['user_id'] : $boss_id;
+            $data['verify_type'] = ($verify == 1) ? 1 : 2;
+            $data['boss_verifier'] = $boss_id;
+            $data['boss_verify_time'] = date("Y-m-d H:i:s");
+            $res = self::db('work_order')->where("id={$order_id}")->update(array('noset'=>$data));
+            if($res){
+                echo 1;
+            }else{
+                echo 0;
+            }
+        }else{
+            echo -1;
+        }
+    }
+
+    /**
+     * 技术部领导审核信息
+     * @param $technology_id
+     * @param $order_id
+     * @param int $verify
+     * @param string $mark
+     */
+    public function technologyVerify($technology_id,$order_id,$verify=0,$mark=""){
+        if(!empty(intval($order_id))){
+            $technology_id = empty($technology_id) ? $_SESSION['ticket']['user_id'] : $technology_id;
+            $data['verify_type'] = ($verify == 1) ? 3 : 4;
+            $data['verifier_id'] = $technology_id;
+            $data['verify_time'] = date("Y-m-d H:i:s");
+            $data['verify_mark'] = $mark;
+            $res = self::db('work_order')->where("id={$order_id}")->update(array('noset'=>$data));
+            if($res){
+                echo 1;
+            }else{
+                echo 0;
+            }
+        }else{
+            echo -1;
+        }
     }
 
 }
