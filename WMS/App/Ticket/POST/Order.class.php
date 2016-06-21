@@ -30,7 +30,7 @@ class Order extends \App\Ticket\Common
         $data['applicants_boss_id'] = $_POST['applicants_boss_id'];
         $data['requirement']        = $this->isP('requirement','请填写工单描述信息');
         if($data['order_type'] == 1){
-            $data['order_sn'] = "ASAF".time();
+            $data['order_sn'] = "ASAF".time().rand(2);
             $data['urgency_type']   = empty($_POST['urgency_type']) ? 0 : $_POST['urgency_type'];
             $data['finish_time']    = $_POST['finish_time'];
             $design_type            = $this->isP('design_type',"请选择设计类型");
@@ -46,11 +46,11 @@ class Order extends \App\Ticket\Common
             $data['adv_start_time'] = $_POST['adv_start_time'];
             $data['adv_end_time']   = $_POST['adv_end_time'];
         }elseif($data['order_type'] == 2){
-            $data['order_sn'] = "AFPD".time();
+            $data['order_sn'] = "AFPD".time().rand(2);
             $data['urgency_type']   = empty($_POST['urgency_type']) ? 0 : $_POST['urgency_type'];
             $data['finish_time']    = $_POST['finish_time'];
         }elseif($data['order_type'] == 3){
-            $data['order_sn'] = "FBAR".time();
+            $data['order_sn'] = "FBAR".time().rand(2);
             $data['bug_url']        = $_POST['bug_url'];
         }
 
