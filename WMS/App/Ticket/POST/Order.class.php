@@ -90,4 +90,22 @@ class Order extends \App\Ticket\Common
             }
         }
     }
+
+    public function bossVerify()
+    {
+        $user_id = isset($this->user['user_id']) ? (empty($this->user['user_id']) ? 0 : intval($this->user['user_id'])) : 0;
+        $order_id = $_POST['oid'];
+        $verify_type = $_POST['verify'];
+        $res = \Model\OrderModel::bossVerify($user_id,$order_id,$verify_type);
+        echo $res;
+    }
+
+    public function technologyVerify(){
+        $user_id = isset($this->user['user_id']) ? (empty($this->user['user_id']) ? 0 : intval($this->user['user_id'])) : 0;
+        $order_id = $_POST['oid'];
+        $verify_type = $_POST['verify'];
+        $verify_mark = $_POST['verify_mark'];
+        $res = \Model\OrderModel::technologyVerify($user_id,$order_id,$verify_type,$verify_mark);
+        echo $res;
+    }
 }
