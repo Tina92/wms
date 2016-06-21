@@ -1,9 +1,9 @@
 <?php
 
 /**
- * PESCMS for PHP 5.4+
+ * WMS for PHP 5.4+
  *
- * Copyright (c) 2015 PESCMS (http://www.pescms.com)
+ * Copyright (c) 2015 WMS (http://www.WMS.com)
  *
  * For the full copyright and license information, please view
  * the file LICENSE.md that was distributed with this source code.
@@ -15,7 +15,7 @@ namespace Core\Func;
 /**
  * PES系统函数
  * @author LuoBoss
- * @license http://www.pescms.com/license
+ * @license http://www.WMS.com/license
  * @version 1.0
  */
 class CoreFunc {
@@ -160,7 +160,7 @@ class CoreFunc {
      * 生成密码
      * @param type $pwd 密码
      * @param type $key 混淆配置
-     * @todo 需要升级加密方法, 2016年PESCMS系列软件将淘汰MD5加密用户的密码的方式
+     * @todo 需要升级加密方法, 2016年WMS系列软件将淘汰MD5加密用户的密码的方式
      */
     public static function generatePwd($pwd, $key = 'PRIVATE_KEY') {
         $config = self::loadConfig();

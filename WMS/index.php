@@ -2,8 +2,8 @@
 /**
  * 项目入口
  * @author LuoBoss
- * @copyright ©2013-2014 PESCMS
- * @license http://www.pescms.com/license
+ * @copyright ©2013-2014 WMS
+ * @license http://www.WMS.com/license
  * @version 1.0
  */
 define('ITEM', 'App');

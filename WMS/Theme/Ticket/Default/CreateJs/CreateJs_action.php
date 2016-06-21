@@ -1,4 +1,4 @@
-<form action="http://app.pescms.com/?g=App&m=CreateJs&a=action" id="form" method="POST">
+<form action="http://app.WMS.com/?g=App&m=CreateJs&a=action" id="form" method="POST">
 
     <input type="hidden" name="number" value="<?= $_GET['number']; ?>"/>
     <input type="hidden" name="form" value="<?= base64_encode($form); ?>" />

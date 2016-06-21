@@ -1,10 +1,10 @@
 <header class="am-topbar">
     <h1 class="am-topbar-brand">
-        <a href="#">PESCMS Ticket</a>
+        <a href="#">Work Order Management System</a>
     </h1>
 
         <div class="am-topbar-right">
-            <a href="<?=DOCUMENT_ROOT?>/?g=Ticket&m=Login&a=index" class="am-btn am-btn-primary am-topbar-btn am-btn-sm">管理工单</a>
+            <a href="<?=DOCUMENT_ROOT?>/?g=Ticket&m=Login&a=index" class="am-btn am-btn-primary am-topbar-btn am-btn-sm">登录</a>
         </div>
     </div>
 </header>
@@ -15,13 +15,13 @@
     </div>
 
     <div class="am-u-sm-6 am-u-sm-centered">
-        <form action="<?= $label->url('View-ticket') ?>" method="GET" data-am-validator>
-            <input type="hidden" name="m" value="View" />
-            <input type="hidden" name="a" value="ticket">
+        <form action="/?" method="GET" data-am-validator>
+            <input type="hidden" name="m" value="Order" />
+            <input type="hidden" name="a" value="info">
             <div class="am-input-group ">
-                <input type="text" name="number" class="am-form-field" required placeholder="填入您所知道工单，马上了解进度">
+                <input type="text" name="number" class="am-form-field" required placeholder="填入工单号，查看工单详细信息  (例：ASAF146638700032)">
             <span class="am-input-group-btn">
-                <button class="am-btn am-btn-default" type="submit">获知</button>
+                <button class="am-btn am-btn-default" type="submit">查看</button>
             </span>
             </div>
         </form>

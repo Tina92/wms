@@ -1,6 +1,6 @@
 <?php
 /**
- * Created by PhpStorm.
+ * .
  * User: YaoJie
  * Date: 2016/6/16
  * Time: 14:04
@@ -15,7 +15,21 @@ class OrderModel extends \Core\Model\Model {
     public function findOrderBySn($sn){
         $result = self::db('work_order')->where('order_sn = :order_sn')->find(array('order_sn' => $sn));
         if(empty($result)){
-            self::error('该工单不存在');
+            self::error('该工单不存在，请输入有效的工单号');
+        }
+        return $result;
+    }
+
+    /**
+     * 根据条件查询工单信息
+     * @param $where
+     * @param array $condition
+     * @return mixed
+     */
+    public function findOrderByWC($where, $condition = array()){
+        $result = self::db('work_order')->where($where)->find($condition);
+        if(empty($result)){
+            self::error("该工单不存在,或者您的权限无法浏览该工单信息");
         }
         return $result;
     }

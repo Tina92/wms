@@ -3,8 +3,8 @@
 /**
  * PSE核心引入文件
  * @author LuoBoss
- * @copyright ©2013-2015 PESCMS
- * @license http://www.pescms.com/license
+ * @copyright ©2013-2015 WMS
+ * @license http://www.WMS.com/license
  * @version 2.5
  */
 //PES已经自定义错误功能，因此禁用系统的错误信息

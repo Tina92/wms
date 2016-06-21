@@ -1,11 +1,12 @@
 <?php
 /**
- * Created by PhpStorm.
+ * .
  * User: YaoJie
  * Date: 2016/6/2
  * Time: 15:58
  */
 namespace App\Ticket\GET;
+use App\Ticket\PUT\Model;
 
 /**
  * 工单
@@ -37,7 +38,22 @@ class Order extends \App\Ticket\Common
     }
 
     public function info(){
-        $guid = $this->isG("order_id");
+        $oid = $this->isG("order_id", "系统参数丢失，请刷新页面重试");
+        $uid = isset($this->user['user_id']) ? $this->user['user_id'] : $_SESSION['ticket']['user_id'];
+        $ut = isset($this->user['user_group_id']) ? $this->user['user_group_id'] : $_SESSION['ticket']['user_group_id'];
+        $ub = isset($this->user['user_boss']) ? $this->user['user_boss'] : $_SESSION['ticket']['user_boss'];
+        $where = " id = :id ";
+        if($ut > 2){
+            if($ub == 0){
+                $where .= " AND applicants_boss_id = :uid ";
+            }else{
+                $where .= " AND applicants_id = :uid ";
+            }
+        }
+        $condition['id'] = $oid;
+        $condition['uid'] = $uid;
+        $info = \Model\OrderModel::findOrderByWC($where,$condition);
+        $this->assign('info',$info);
         $this->layout();
     }
 
