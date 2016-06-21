@@ -125,25 +125,27 @@ class OrderModel extends \Core\Model\Model {
 
     /**
      * 领导审核
-     * @param int $boss_id
+     * @param $boss_id
      * @param $order_id
      * @param int $verify
+     * @return int
      */
     public function bossVerify($boss_id,$order_id,$verify=0){
-        if(!empty(intval($order_id))){
+        if(!empty($order_id)){
             $boss_id = empty($boss_id) ? $_SESSION['ticket']['user_id'] : $boss_id;
             $data['verify_type'] = ($verify == 1) ? 1 : 2;
             $data['boss_verifier'] = $boss_id;
             $data['boss_verify_time'] = date("Y-m-d H:i:s");
             $res = self::db('work_order')->where("id={$order_id}")->update(array('noset'=>$data));
             if($res){
-                echo 1;
+                $result = 1;
             }else{
-                echo 0;
+                $result = 0;
             }
         }else{
-            echo -1;
+            $result = -1;
         }
+        return $result;
     }
 
     /**
@@ -152,9 +154,10 @@ class OrderModel extends \Core\Model\Model {
      * @param $order_id
      * @param int $verify
      * @param string $mark
+     * @return int
      */
     public function technologyVerify($technology_id,$order_id,$verify=0,$mark=""){
-        if(!empty(intval($order_id))){
+        if(!empty($order_id)){
             $technology_id = empty($technology_id) ? $_SESSION['ticket']['user_id'] : $technology_id;
             $data['verify_type'] = ($verify == 1) ? 3 : 4;
             $data['verifier_id'] = $technology_id;
@@ -162,13 +165,14 @@ class OrderModel extends \Core\Model\Model {
             $data['verify_mark'] = $mark;
             $res = self::db('work_order')->where("id={$order_id}")->update(array('noset'=>$data));
             if($res){
-                echo 1;
+                $result = 1;
             }else{
-                echo 0;
+                $result = 0;
             }
         }else{
-            echo -1;
+            $result = -1;
         }
+        return $result;
     }
 
 }
