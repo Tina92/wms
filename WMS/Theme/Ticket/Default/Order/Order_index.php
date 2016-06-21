@@ -38,6 +38,7 @@
                                 <?php echo $v['add_time']?>
                             </div>
                             <div class="am-u-sm-3">
+                            	<div class="am-cf">
                                 <?php if($user['user_group_id'] == 1){?>
                                     <a class="am-btn am-btn-primary">通过</a>
                                     <a class="am-btn am-btn-danger">不通过</a>
@@ -46,6 +47,7 @@
                                     <a class="am-btn am-btn-danger">不同意</a>
                                 <?php }?>
                                 <a class="am-btn am-btn-primary">查看</a>
+                                </div>
                             </div>
                         </li>
                     <?php }?>
@@ -192,7 +194,7 @@
         }
     });
     $(".page2").createPage({
-        pageCount:15,
+        pageCount:<?php echo $count['new']?>,
         current:1,
         backFn:function(p){
             $.ajax({
@@ -214,7 +216,7 @@
         }
     });
     $(".page3").createPage({
-        pageCount:10,
+        pageCount:<?php echo $count['new']?>,
         current:1,
         backFn:function(p){
             $.ajax({
