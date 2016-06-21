@@ -1,0 +1,13 @@
+.container {
+  padding: 1.5rem 3rem; }
+  .container h2 {
+    font-size: 42px;
+    font-weight: 400;
+    margin-bottom: 4rem; }
+  .container .am-form {
+    padding: 0 10%;
+    font-size: 16px; }
+    .container .am-form .am-g {
+      line-height: 3rem; }
+
+/*# sourceMappingURL=info.css.map */
