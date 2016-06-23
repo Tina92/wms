@@ -50,4 +50,16 @@ li.am-cf {
     background: #f2f2f2;
     border: 1px solid #bfbfbf; }
 
+.verify_mark {
+  position: absolute;
+  top: 10%;
+  left: 30%;
+  width: 40%;
+  display: none; }
+  .verify_mark .am-panel-bd textarea {
+    width: 100%; }
+  .verify_mark .am-panel-bd p {
+    text-align: right;
+    margin-bottom: 0; }
+
 /*# sourceMappingURL=order.css.map */

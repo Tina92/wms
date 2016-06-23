@@ -39,12 +39,13 @@
                             </div>
                             <div class="am-u-sm-3">
                             	<div class="am-cf">
+                                <input value="<?php echo $v['id']?>" type="hidden"/>
                                 <?php if($user['user_group_id'] == 1){?>
-                                    <a class="am-btn am-btn-primary">通过</a>
-                                    <a class="am-btn am-btn-danger">不通过</a>
+                                    <a class="am-btn am-btn-primary via" vid="3">通过</a>
+                                    <a class="am-btn am-btn-danger via" vid="4">不通过</a>
                                 <?php }elseif($user['user_group_id'] > 2 && $user['user_boss'] == 0){?>
-                                    <a class="am-btn am-btn-primary">同意</a>
-                                    <a class="am-btn am-btn-danger">不同意</a>
+                                    <a class="am-btn am-btn-primary agree" vid="1">同意</a>
+                                    <a class="am-btn am-btn-danger agree" vid="2">不同意</a>
                                 <?php }?>
                                 <a class="am-btn am-btn-primary" href="/?g=Ticket&m=Order&a=info&order_id=<?php echo $v['id']?>">查看</a>
                                 </div>
@@ -162,6 +163,21 @@
         </div>
     </div>
 </div>
+<div class="verify_mark">
+	<div class="am-panel am-panel-default">
+		<div class="am-panel-hd">
+			不能通过的原因
+		</div>
+		<div class="am-panel-bd">
+			<textarea class="no-via" rows="5" placeholder="请输入..."></textarea>
+			<p>
+				<button type="submit" class="am-btn am-btn-default submit">确认</button>
+				<button type="submit" class="am-btn am-btn-default cancel">取消</button>
+			</p>
+		</div>
+	</div>
+	
+</div>
 <script>
 	$(".page1").createPage({
         pageCount:<?php echo $count['new']?>,
@@ -180,11 +196,11 @@
 			                    html+= (v.order_type==1)?"设计":(v.order_type==2)?"开发":"BUG";
 			                    html+= '</div><div class="am-u-sm-3">'+v.add_time+'</div><div class="am-u-sm-3">';
 			                    <?php if($user['user_group_id'] == 1){?>
-                                    html+= '<a class="am-btn am-btn-primary">通过</a>'+
-                                           '<a class="am-btn am-btn-danger">不通过</a>';
+                                    html+= '<a class="am-btn am-btn-primary via" vid="3">通过</a>'+
+                                           '<a class="am-btn am-btn-danger via" vid="4">不通过</a>';
                                 <?php }elseif($user['user_group_id'] > 2 && $user['user_boss'] == 0){?>
-                                    html+= '<a class="am-btn am-btn-primary">同意</a>'+
-                                    '<a class="am-btn am-btn-danger">不同意</a>';
+                                    html+= '<a class="am-btn am-btn-primary agree" vid="1">同意</a>'+
+                                    '<a class="am-btn am-btn-danger agree" vid="2">不同意</a>';
                                 <?php }?>
 			                    html+= '<a class="am-btn am-btn-primary" href="/?g=Ticket&m=Order&a=info&order_id='+ v.id +'">查看</a></div></li>';
 								});
@@ -237,4 +253,92 @@
             });
         }
     });
+    
+    $(document).on('click', '.agree', function() {
+           var oid=$(this).siblings("input").val();
+           var verify=$(this).attr("vid");
+           var c=confirm("是否确认");
+           if(c){
+           $.ajax({
+           	type:"POST",
+           	url:"/?g=Ticket&m=Order&a=bossVerify",
+           	data:{oid:oid,verify:verify},
+            dataType:"text",
+            success:function(data){
+            	if(data==-1){
+            		alert("参数获取失败，请刷新");
+            	}
+            	else if(data==0){
+            		alert("审核失败，请稍候重试");
+            	}
+            	else if(data==1){
+            		alert("审核成功");
+            	}
+            	else{
+            		alert("请重试");
+            	}
+            	window.reload();
+            }
+           });
+        }
+    });
+    $(document).on('click', '.via', function() {
+           var oid=$(this).siblings("input").val();
+           var verify=$(this).attr("vid");
+           if(verify==3){
+           		$.ajax({
+		           	type:"POST",
+		           	url:"/?g=Ticket&m=Order&a=technologyVerify",
+		           	data:{oid:oid,verify:verify},
+		            dataType:"text",
+		            success:function(data){
+		            	if(data==-1){
+		            		alert("参数获取失败，请刷新");
+		            	}
+		            	else if(data==0){
+		            		alert("审核失败，请稍候重试");
+		            	}
+		            	else if(data==1){
+		            		alert("审核成功");
+		            	}
+		            	else{
+		            		alert("请重试");
+		            	}
+		            	window.reload();
+		            }
+		           });
+           }
+           else{
+           	$(".verify_mark").show();
+           	$(document).on('click', '.submit', function() {
+		    	var verify_mark=$(".no-via").val();
+		    	$.ajax({
+		           	type:"POST",
+		           	url:"/?g=Ticket&m=Order&a=technologyVerify",
+		           	data:{oid:oid,verify:verify,verify_mark:verify_mark},
+		            dataType:"text",
+		            success:function(data){
+		            	if(data==-1){
+		            		alert("参数获取失败，请刷新");
+		            	}
+		            	else if(data==0){
+		            		alert("审核失败，请稍候重试");
+		            	}
+		            	else if(data==1){
+		            		alert("审核成功");
+		            	}
+		            	else{
+		            		alert("请重试");
+		            	}
+		            	window.reload();
+		            }
+		           });
+		        $(".verify_mark").hide();
+		    });
+           } ;     
+    });
+    $(document).on('click', '.cancel', function() {
+    	$(".verify_mark").hide();
+    });
+    
 </script>
