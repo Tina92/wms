@@ -29,6 +29,11 @@ class Order extends \App\Ticket\Common
         $data['applicants_name']    = $this->isP('applicants_name', '系统参数错误，请重新登录再试');
         $data['applicants_dep_id']  = $this->isP('applicants_dep_id');
         $data['applicants_boss_id'] = $_POST['applicants_boss_id'];
+        if($data['applicants_boss_id'] == 0){
+            $data['verify_type'] = 1;
+            $data['boss_verifier'] = $data['applicants_id'];
+            $data['boss_verify_time'] = date("Y-m-d H:i:s");
+        }
         $data['requirement']        = $this->isP('requirement','请填写工单描述信息');
         if($data['order_type'] == 1){
             $data['order_sn'] = "ASAF".time().rand(2);
