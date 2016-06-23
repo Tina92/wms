@@ -16,6 +16,9 @@ class OrderModel extends \Core\Model\Model {
         $result = self::db('work_order')->where('order_sn = :order_sn')->find(array('order_sn' => $sn));
         if(empty($result)){
             self::error('该工单不存在，请输入有效的工单号');
+        }else{
+            $result['applicants_dep_name'] = self::db('user_group')->where("user_group_id = {$result['applicants_dep_id']}")->find()['user_group_name'];
+            $result['boss_name'] = self::db('user')->where("user_id = {$result['applicants_boss_id']}")->find()['user_name'];
         }
         return $result;
     }
@@ -30,6 +33,9 @@ class OrderModel extends \Core\Model\Model {
         $result = self::db('work_order')->where($where)->find($condition);
         if(empty($result)){
             self::error("该工单不存在,或者您的权限无法浏览该工单信息");
+        }else{
+            $result['applicants_dep_name'] = self::db('user_group')->where("user_group_id = {$result['applicants_dep_id']}")->find()['user_group_name'];
+            $result['boss_name'] = self::db('user')->where("user_id = {$result['applicants_boss_id']}")->find()['user_name'];
         }
         return $result;
     }

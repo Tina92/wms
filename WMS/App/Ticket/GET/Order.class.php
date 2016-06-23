@@ -16,6 +16,7 @@ use App\Ticket\PUT\Model;
 class Order extends \App\Ticket\Common
 {
     public final function __init() {
+        $this->config = require PES_PATH . 'Config/config.php';
         $this->user = $_SESSION['ticket'];
         $this->user['group_name'] = $this->db('user_group')->field('user_group_name')->where("user_group_id=:user_group_id")->find(array('user_group_id'=>$this->user['user_group_id']))['user_group_name'];
         $this->assign('user',$this->user);
@@ -84,6 +85,29 @@ class Order extends \App\Ticket\Common
     public function add3(){
         $this->layout();
     }
-
+    /**
+     * 下载文件
+     */
+    public function downloadFile(){
+        $file_name = $_GET['file_name'];     //下载文件名
+        $file_dir = PES_PATH.$this->config['UPLOAD_PATH']."Order/";       //下载文件存放目录
+        //检查文件是否存在
+        if (! file_exists ( $file_dir . $file_name )) {
+            $this->error('文件找不到');exit();
+        } else {
+            //打开文件
+            $file = fopen ( $file_dir . $file_name, "r" );
+            //输入文件标签
+            Header ( "Content-type: application/octet-stream" );
+            Header ( "Accept-Ranges: bytes" );
+            Header ( "Accept-Length: " . filesize ( $file_dir . $file_name ) );
+            Header ( "Content-Disposition: attachment; filename=" . $file_name );
+            //输出文件内容
+            //读取文件内容并直接输出到浏览器
+            echo fread ( $file, filesize ( $file_dir . $file_name ) );
+            fclose ( $file );
+            exit();
+        }
+    }
 
 }

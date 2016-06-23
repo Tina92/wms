@@ -16,7 +16,7 @@
 'FILE_CACHE_TIME' => '1800',
 'LOG_PATH' => '/log',
 'LOG_DELETE' => '7',
-'UPLOAD_PATH' => '/Upload',
+'UPLOAD_PATH' => 'Upload/',
 'URLMODEL' => array(
 'INDEX' => '0',
 'SUFFIX' => '1',

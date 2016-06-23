@@ -46,7 +46,7 @@
                                     <a class="am-btn am-btn-primary">同意</a>
                                     <a class="am-btn am-btn-danger">不同意</a>
                                 <?php }?>
-                                <a class="am-btn am-btn-primary">查看</a>
+                                <a class="am-btn am-btn-primary" href="/?g=Ticket&m=Order&a=info&order_id=<?php echo $v['id']?>">查看</a>
                                 </div>
                             </div>
                         </li>
@@ -186,7 +186,7 @@
                                     html+= '<a class="am-btn am-btn-primary">同意</a>'+
                                     '<a class="am-btn am-btn-danger">不同意</a>';
                                 <?php }?>
-			                    html+='<a class="am-btn am-btn-primary">查看</a></div></li>';
+			                    html+= '<a class="am-btn am-btn-primary" href="/?g=Ticket&m=Order&a=info&order_id='+ v.id +'">查看</a></div></li>';
 								});
             		$("#list1").html(html);
             	}

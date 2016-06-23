@@ -58,7 +58,7 @@ class Order extends \App\Ticket\Common
         if(!empty($_FILES['attachment']['tmp_name'])){
             $suf = strtolower(end(explode('.',$_FILES['attachment']['name'])));
             $file_name = date("YmdHis").".".$suf;
-            $path = PES_PATH."/".$this->config['UPLOAD_PATH']."/Order/".$file_name;
+            $path = PES_PATH.$this->config['UPLOAD_PATH']."Order/".$file_name;
             $file_tmp_name = $_FILES['attachment']['tmp_name'];
             //转移上传文件
             $upload = move_uploaded_file($file_tmp_name,$path);
@@ -109,4 +109,5 @@ class Order extends \App\Ticket\Common
         $res = \Model\OrderModel::technologyVerify($user_id,$order_id,$verify_type,$verify_mark);
         echo $res;
     }
+
 }
