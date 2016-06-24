@@ -97,7 +97,7 @@
                                 <?php echo $vv['verify_time']?>
                             </div>
                             <div class="am-u-sm-3">
-                                <a>重新选择</a>
+                                <a class="am-btn am-btn-primary" href="/?g=Ticket&m=Order&a=info&order_id=<?php echo $vv['id']?>">查看</a>
                             </div>
                         </li>
                     <?php }?>
@@ -151,7 +151,7 @@
                                 <?php echo $vvv['finished_time']?>
                             </div>
                             <div class="am-u-sm-2">
-                                <a>删除</a>
+                                <a class="am-btn am-btn-primary" href="/?g=Ticket&m=Order&a=info&order_id=<?php echo $vvv['id']?>">查看</a>
                             </div>
                         </li>
                     <?php }?>
@@ -224,7 +224,7 @@
             		$.each(result, function(k, v){
 			                    html+= '<li class="am-cf"><div class="am-u-sm-2">'+v.order_sn+'</div><div class="am-u-sm-2">'+v.applicants_name+'</div><div class="am-u-sm-2">';
 			                    html+= (v.order_type==1)?"设计":(v.order_type==2)?"开发":"BUG";
-			                    html+= '</div><div class="am-u-sm-3">'+v.verify_time+'</div><div class="am-u-sm-3"><a>重新选择</a></div> </li>';
+			                    html+= '</div><div class="am-u-sm-3">'+v.verify_time+'</div><div class="am-u-sm-3"><a class="am-btn am-btn-primary" href="/?g=Ticket&m=Order&a=info&order_id='+ v.id +'">查看</a></div> </li>';
 								});
             		$("#list2").html(html);
             	}
@@ -246,7 +246,7 @@
             		$.each(result, function(k, v){
 			                    html+= '<li class="am-cf"><div class="am-u-sm-2">'+v.order_sn+'</div><div class="am-u-sm-2">'+v.applicants_name+'</div><div class="am-u-sm-2">';
 			                    html+= (v.order_type==1)?"设计":(v.order_type==2)?"开发":"BUG";
-			                    html+= '</div><div class="am-u-sm-2">'+v.add_time+'</div><div class="am-u-sm-2">'+v.finished_time+'</div><div class="am-u-sm-2"><a>删除</a></div> </li>';
+			                    html+= '</div><div class="am-u-sm-2">'+v.add_time+'</div><div class="am-u-sm-2">'+v.finished_time+'</div><div class="am-u-sm-2"><a class="am-btn am-btn-primary" href="/?g=Ticket&m=Order&a=info&order_id='+ v.id +'">查看</a></div> </li>';
 								});
             		$("#list3").html(html);
             	}
@@ -277,7 +277,7 @@
             	else{
             		alert("请重试");
             	}
-            	window.reload();
+            	location.reload();
             }
            });
         }
@@ -304,7 +304,7 @@
 		            	else{
 		            		alert("请重试");
 		            	}
-		            	window.reload();
+		            	location.reload();
 		            }
 		           });
            }
@@ -330,7 +330,7 @@
 		            	else{
 		            		alert("请重试");
 		            	}
-		            	window.reload();
+		            	location.reload();
 		            }
 		           });
 		        $(".verify_mark").hide();

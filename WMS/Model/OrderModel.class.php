@@ -156,7 +156,7 @@ class OrderModel extends \Core\Model\Model {
             $data['verify_type'] = ($verify == 1) ? 1 : 2;
             $data['boss_verifier'] = $boss_id;
             $data['boss_verify_time'] = date("Y-m-d H:i:s");
-            $res = self::db('work_order')->where("id={$order_id}")->update(array('noset'=>$data));
+            $res = self::db('work_order')->where("id={$order_id}")->update($data);
             if($res){
                 $result = 1;
             }else{
@@ -183,7 +183,7 @@ class OrderModel extends \Core\Model\Model {
             $data['verifier_id'] = $technology_id;
             $data['verify_time'] = date("Y-m-d H:i:s");
             $data['verify_mark'] = $mark;
-            $res = self::db('work_order')->where("id={$order_id}")->update(array('noset'=>$data));
+            $res = self::db('work_order')->where("id={$order_id}")->update($data);
             if($res){
                 $result = 1;
             }else{
