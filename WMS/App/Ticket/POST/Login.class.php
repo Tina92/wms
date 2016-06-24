@@ -22,9 +22,8 @@ class Login extends \App\Ticket\Common{
         if(empty($login)){
             $this->error('帐号或者密码错误，也可能您的账号被禁止登录鸟!');
         }
-
         $_SESSION['ticket'] = $login;
-        $this->success('登录成功!', $this->url('Ticket-Index-index'));
+        $this->success('登录成功!', $this->url('Ticket-Order-index'));
     }
 
 }

@@ -15,7 +15,11 @@ namespace App\Ticket\GET;
 class Login extends \App\Ticket\Common{
 
     public function index(){
-        $this->display();
+        if(isset($_SESSION['ticket']) && $_SESSION['ticket']['user_id'] > 0){
+            header("location:".$this->url('Ticket-Order-index'));
+        }else {
+            $this->display();
+        }
     }
 
     public function logout(){

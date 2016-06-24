@@ -50,9 +50,9 @@ class Order extends \App\Ticket\Common
             }else{
                 $where .= " AND applicants_id = :uid ";
             }
+            $condition['uid'] = $uid;
         }
         $condition['id'] = $oid;
-        $condition['uid'] = $uid;
         $info = \Model\OrderModel::findOrderByWC($where,$condition);
         $this->assign('info',$info);
         $this->layout();
