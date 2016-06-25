@@ -46,11 +46,13 @@ class Order extends \App\Ticket\Common
         $where = " id = :id ";
         if($ut > 2){
             if($ub == 0){
-                $where .= " AND applicants_boss_id = :uid ";
+                $where .= " AND (applicants_boss_id = :uid1 OR applicants_id = :uid2) ";
+                $condition['uid1'] = $uid;
+                $condition['uid2'] = $uid;
             }else{
                 $where .= " AND applicants_id = :uid ";
+                $condition['uid'] = $uid;
             }
-            $condition['uid'] = $uid;
         }
         $condition['id'] = $oid;
         $info = \Model\OrderModel::findOrderByWC($where,$condition);

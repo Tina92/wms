@@ -61,7 +61,14 @@ class Order extends \App\Ticket\Common
         }
 
         if(!empty($_FILES['attachment']['tmp_name'])){
+            if($_FILES['attachment']['size'] > 10485760){
+                $this->error("附件过大，不允许上传超过10M的附件!");
+            }
+            $allow_file = explode("|", "gif|jpg|png|jpeg|doc|docx|dot|dotx|xls|xlt|xla|xlsx|xltx|xlsm|xltm|xlam|xlsb|rar|zip"); //允许上传的文件类型组
             $suf = strtolower(end(explode('.',$_FILES['attachment']['name'])));
+            if (!in_array(strtolower($suf),$allow_file)){
+                $this->error("[".strtoupper($suf)."]类型文件不允许上传!");
+            }
             $file_name = date("YmdHis").".".$suf;
             $path = PES_PATH.$this->config['UPLOAD_PATH']."Order/".$file_name;
             $file_tmp_name = $_FILES['attachment']['tmp_name'];
