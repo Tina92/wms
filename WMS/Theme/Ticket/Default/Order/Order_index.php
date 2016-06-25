@@ -3,7 +3,7 @@
 <div class="am-g ">
         <div class="am-u-sm-6">
         <div class="am-panel am-panel-primary">
-            <div class="am-panel-hd">新提交工单</div>
+            <div class="am-panel-hd">待审核工单</div>
             <ul class="am-list" id="list1">
                 <li class="am-cf">
                     <div class="am-u-sm-2">
@@ -62,7 +62,7 @@
     </div>
         <div class="am-u-sm-6">
         <div class="am-panel am-panel-warning">
-            <div class="am-panel-hd">进行中的工单</div>
+            <div class="am-panel-hd">待受理工单</div>
             <ul class="am-list" id="list2">
                 <li class="am-cf">
                     <div class="am-u-sm-2">
@@ -110,7 +110,7 @@
     </div>
         <div class="am-u-sm-12">
         <div class="am-panel am-panel-success">
-            <div class="am-panel-hd">已完成工单</div>
+            <div class="am-panel-hd">已受理工单</div>
             <ul class="am-list">
                 <li class="am-cf">
                     <div class="am-u-sm-2">
