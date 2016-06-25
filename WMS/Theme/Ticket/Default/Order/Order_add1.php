@@ -95,7 +95,13 @@
 </div>
 <script>
         KindEditor.ready(function(K) {
-                window.editor = K.create('#editor_id');
+//              window.editor = K.create('#editor_id');
+                window.editor = K.create('#editor_id', {
+//					cssPath : '/data/editor/plugins/code/prettify.css',
+					uploadJson : "/php/upload_json.php",//图片上传后的处理地址
+					fileManager:"/php/file_manager_json.php",
+					allowFileManager : true
+				});
         });
         $(document).on("change","input[type='radio']",function(){
         	
