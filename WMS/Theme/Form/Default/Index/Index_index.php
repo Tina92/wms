@@ -1,6 +1,6 @@
 <header class="am-topbar">
     <h1 class="am-topbar-brand">
-        <a href="#">Work Order Management System</a>
+        <a href="#">研发中心 — 工单协同管理系统</a>
     </h1>
 
         <div class="am-topbar-right">
