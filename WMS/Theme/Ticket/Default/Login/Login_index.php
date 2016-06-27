@@ -2,7 +2,7 @@
 <div class="am-g " style="padding-top: 200px;">
     <div class="am-u-sm-4 am-u-lg-centered am-u-sm-centered">
         <form action="" method="POST" data-am-validator>
-            <h1 class="am-text-center" style="color: #fff">WMS</h1>
+            <h1 class="am-text-center" style="color: #fff">D-CMSR</h1>
             <input name="account" class="am-form-field" type="text" placeholder="账号" required>
             <input name="passwd" class="am-form-field" type="password" placeholder="密码" required>
             <button class="am-btn am-btn-primary am-btn-block">提交</button>
