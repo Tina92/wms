@@ -51,7 +51,7 @@
             'justifyfull', 'insertorderedlist', 'insertunorderedlist', 'indent', 'outdent', 'subscript',
             'superscript', '|', 'selectall', 'clearhtml','quickformat','|',
             'formatblock', 'fontname', 'fontsize', '|', 'forecolor', 'hilitecolor', 'bold',
-            'italic', 'underline', 'strikethrough', 'lineheight', 'removeformat', '|', 'image', 'table', 'hr', 'emoticons', 'link', 'unlink', '|', 'about'],
+            'italic', 'underline', 'strikethrough', 'lineheight', 'removeformat', '|','table', 'hr', 'emoticons', 'link', 'unlink', '|', 'about'],
 					uploadJson : "./php/upload_json.php",//图片上传后的处理地址
 					fileManager:"./php/file_manager_json.php",
 					allowFileManager : true
