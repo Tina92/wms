@@ -19,7 +19,7 @@ class Order extends \App\Ticket\Common
     public function __init() {
         $this->config = require PES_PATH . 'Config/config.php';
         $this->user = $_SESSION['ticket'];
-        $this->user['group_name'] = $this->db('user_group')->field('user_group_name')->where("user_group_id=:user_group_id")->find(array('user_group_id'=>$user['user_group_id']))['user_group_name'];
+        $this->user['group_name'] = $this->db('user_group')->field('user_group_name')->where("user_group_id=:user_group_id")->find(array('user_group_id'=>$this->user['user_group_id']))['user_group_name'];
     }
 
     public function index()
@@ -36,7 +36,7 @@ class Order extends \App\Ticket\Common
         }
         $data['requirement']        = $this->isP('requirement','请填写工单描述信息');
         if($data['order_type'] == 1){
-            $data['order_sn'] = "ASAF".time().rand(2);
+            $data['order_sn'] = "S";
             $data['urgency_type']   = empty($_POST['urgency_type']) ? 0 : $_POST['urgency_type'];
             $data['finish_time']    = $_POST['finish_time'];
             $design_type            = $this->isP('design_type',"请选择设计类型");
@@ -52,14 +52,24 @@ class Order extends \App\Ticket\Common
             $data['adv_start_time'] = $_POST['adv_start_time'];
             $data['adv_end_time']   = $_POST['adv_end_time'];
         }elseif($data['order_type'] == 2){
-            $data['order_sn'] = "AFPD".time().rand(2);
+            $data['order_sn'] = "D";
             $data['urgency_type']   = empty($_POST['urgency_type']) ? 0 : $_POST['urgency_type'];
             $data['finish_time']    = $_POST['finish_time'];
         }elseif($data['order_type'] == 3){
-            $data['order_sn'] = "FBAR".time().rand(2);
+            $data['order_sn'] = "A";
             $data['bug_url']        = $_POST['bug_url'];
         }
-
+        $year = date("y");
+        $month = date("m");
+        $day = date("d");
+        $osn_mid = strtoupper(dechex($year-15).dechex($month).str_pad(dechex($day),2,'0',STR_PAD_LEFT));
+        $data['order_sn'] .= $osn_mid;
+        $resa = self::db('work_order')->where("order_sn LIKE '{$data['order_sn']}%'")->order("order_sn DESC")->limit('1')->find();
+        if($resa){
+            $data['order_sn'] .= str_pad((intval(substr($resa['order_sn'],-2))+1),2,'0',STR_PAD_LEFT);
+        }else{
+            $data['order_sn'] .= "01";
+        }
         if(!empty($_FILES['attachment']['tmp_name'])){
             if($_FILES['attachment']['size'] > 10485760){
                 $this->error("附件过大，不允许上传超过10M的附件!");
@@ -101,6 +111,28 @@ class Order extends \App\Ticket\Common
             }else{
                 echo(json_encode(array('state'=>false)));
             }
+        }
+    }
+
+    public function finished()
+    {
+        if($this->user['user_group_id']==1){
+            $order_id = $this->isP('oid',"参数获取失败，请刷新后重试");
+            $res = \Model\OrderModel::finished($order_id);
+            echo $res;
+        }else{
+            $this->error("您没有权限执行此项操作");
+        }
+    }
+
+    public function delete()
+    {
+        if($this->user['user_group_id']==1){
+            $order_id = $this->isP('oid',"参数获取失败，请刷新后重试");
+            $res = \Model\OrderModel::delete($order_id);
+            echo $res;
+        }else{
+            $this->error("您没有权限执行此项操作");
         }
     }
 

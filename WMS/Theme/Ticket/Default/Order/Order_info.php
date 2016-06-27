@@ -1,5 +1,6 @@
 <link rel="stylesheet" href="<?= DOCUMENT_ROOT; ?>/Theme/assets/css/sass/sass/info.css">
 <div class="container am-padding ">
+	<a class="am-margin-right-xs am-text-danger" href="/?g=Ticket&m=Order&a=index"><i class="am-icon-reply"></i> 工单列表</a>
 	<div class="title am-pagination-centered">
 		<h2><?php
 			switch($info['order_type']){
@@ -13,7 +14,7 @@
 					echo "反馈BUG和建议";
 					break;
 				default :
-					echo "反馈BUG和建议";
+					echo "未知类型工单";
 					break;
 			}
 			?></h2>
@@ -150,20 +151,27 @@
 				工单状态
 			</div>
 			<div class="am-u-sm-9">
-				<?php if($info['verify_type'] == 4){
-					if($info['finished_time'] != "0000-00-00 00:00:00" && !empty($info['finished_time'])){
-						echo "已经于 ".$info['finished_time']." 完成";
-					}else{
-						echo "技术部审核不通过";
-					}
-				}elseif($info['verify_type'] == 3){
-					echo "工单正在进行中";
-				}elseif($info['verify_type'] == 2){
-					echo "工单完结，领导审阅不通过，审核领导：".$info['boss_name'];
-				}elseif($info['verify_type'] == 1){
-					echo "待技术部领导审核";
+				<?php
+				if($info['delete_state'] == 1){
+					echo "工单已经删除";
 				}else{
-					echo "待直属领导审阅，直属领导：".$info['boss_name'];
+					if($info['order_state'] == 0){
+						if($info['verify_type'] == 4){
+							echo "技术部审核不通过";
+						}elseif($info['verify_type'] == 3){
+							echo "工单正在进行中";
+						}elseif($info['verify_type'] == 2){
+							echo "工单完结，领导审阅不通过，审核领导：".$info['boss_name'];
+						}elseif($info['verify_type'] == 1){
+							echo "待技术部领导审核";
+						}else{
+							echo "待直属领导审阅，直属领导：".$info['boss_name'];
+						}
+					}else{
+						if($info['finished_time'] != "0000-00-00 00:00:00" && !empty($info['finished_time'])){
+							echo "已经于 ".$info['finished_time']." 完成";
+						}
+					}
 				}
 				?>
 			</div>
@@ -214,6 +222,16 @@
 					<div class="am-u-sm-4">
 						<?php if($info['verify_mark'] != null){ echo $info['verify_mark'];}?>
 					</div>
+				</div>
+			</div>
+		<?php }?>
+		<?php if($info['order_state'] == 1){?>
+			<div class="am-g am-u-sm-12">
+				<div class="am-u-sm-3">
+					工单完成时间
+				</div>
+				<div class="am-u-sm-9">
+					<span><?=$info['finished_time']?></span>
 				</div>
 			</div>
 		<?php }?>

@@ -15,7 +15,7 @@ class Order extends \App\Form\Common{
         $this->user['group_name'] = $this->db('user_group')->field('user_group_name')->where("user_group_id=:user_group_id")->find(array('user_group_id'=>$this->user['user_group_id']))['user_group_name'];
         $this->assign('user',$this->user);
         $number = $this->isG('order_sn', '请选择您要查看的工单');
-        if(strlen($number) < 14){
+        if(strlen($number) != 7){
             self::error("请输入有效的工单号");
         }
         $info = \Model\OrderModel::findOrderBySn($number);

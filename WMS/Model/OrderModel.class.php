@@ -52,18 +52,18 @@ class OrderModel extends \Core\Model\Model {
      */
     public function getUserOrderList($user_id, $user_group_id=0, $user_boss=0, $type = 0, $page=1, $page_num=10){
         $page_start = ($page-1)*$page_num;
-        $where = "1 ";
+        $where = "delete_state = 0 ";
         if($user_group_id == 1){
             if(isset($type)){
                 switch($type){
                     case 0 :
-                        $where .= "AND verify_type = 1 ";
+                        $where .= "AND verify_type = 1 AND order_state <> 1 ";
                         break;
                     case 1 :
-                        $where .= "AND verify_type = 3 ";
+                        $where .= "AND verify_type = 3 AND order_state <> 1  ";
                         break;
                     case 2:
-                        $where .= "AND verify_type in('2','4','5') ";
+                        $where .= "AND (verify_type in('2','4','5') OR order_state = 1) ";
                         break;
                 }
             }
@@ -74,13 +74,13 @@ class OrderModel extends \Core\Model\Model {
                 if(isset($type)){
                     switch($type){
                         case 0 :
-                            $where .= "AND verify_type in('0','1') ";
+                            $where .= "AND verify_type in('0','1') AND order_state <> 1 ";
                             break;
                         case 1 :
-                            $where .= "AND verify_type = 3 ";
+                            $where .= "AND verify_type = 3 AND order_state <> 1  ";
                             break;
                         case 2:
-                            $where .= "AND verify_type in('2','4','5') ";
+                            $where .= "AND (verify_type in('2','4','5') OR order_state = 1) ";
                             break;
                     }
                 }
@@ -91,17 +91,17 @@ class OrderModel extends \Core\Model\Model {
                 if(isset($type)){
                     switch($type){
                         case 0 :
-                            $where .= "AND verify_type = 0 ";
+                            $where .= "AND verify_type = 0 AND order_state <> 1 ";
                             break;
                         case 1 :
-                            $where .= "AND verify_type in('1','3') ";
+                            $where .= "AND verify_type in('1','3') AND order_state <> 1  ";
                             break;
                         case 2:
-                            $where .= "AND verify_type in('2','4','5') ";
+                            $where .= "AND (verify_type in('2','4','5') OR order_state = 1) ";
                             break;
                     }
                 }
-                $where .= "AND applicants_dep_id = ".$user_group_id." ";
+                $where .= " AND applicants_dep_id = ".$user_group_id." ";
             }
         }
         $result = self::getOrderByWPP($where,$page_start,$page_num);
@@ -139,6 +139,37 @@ class OrderModel extends \Core\Model\Model {
         $result = self::db('work_order')->insert($data);
         if(empty($result)){
             self::error('工单保存失败');
+        }
+        return $result;
+    }
+
+    public function finished($order_id){
+        if(!empty($order_id)){
+            $data['order_state'] = 1;
+            $data['finished_time'] = date("Y-m-d H:i:s");
+            $res = self::db('work_order')->where("id={$order_id}")->update($data);
+            if($res){
+                $result = 1;
+            }else{
+                $result = 0;
+            }
+        }else{
+            $result = -1;
+        }
+        return $result;
+    }
+
+    public function delete($order_id){
+        if(!empty($order_id)){
+            $data['delete_state'] = 1;
+            $res = self::db('work_order')->where("id={$order_id}")->update($data);
+            if($res){
+                $result = 1;
+            }else{
+                $result = 0;
+            }
+        }else{
+            $result = -1;
         }
         return $result;
     }

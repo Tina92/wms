@@ -41,8 +41,8 @@
                             	<div class="am-cf">
                                 <input value="<?php echo $v['id']?>" type="hidden"/>
                                 <?php if($user['user_group_id'] == 1){?>
-                                    <a class="am-btn am-btn-primary via" vid="3">通过</a>
-                                    <a class="am-btn am-btn-danger via" vid="4">不通过</a>
+                                    <a class="am-btn am-btn-primary via" vid="1">通过</a>
+                                    <a class="am-btn am-btn-danger via" vid="2">不通过</a>
                                 <?php }elseif($user['user_group_id'] > 2 && $user['user_boss'] == 0){?>
                                     <a class="am-btn am-btn-primary agree" vid="1">同意</a>
                                     <a class="am-btn am-btn-danger agree" vid="2">不同意</a>
@@ -62,7 +62,7 @@
     </div>
         <div class="am-u-sm-6">
         <div class="am-panel am-panel-warning">
-            <div class="am-panel-hd">待受理工单</div>
+            <div class="am-panel-hd">进行中的工单</div>
             <ul class="am-list" id="list2">
                 <li class="am-cf">
                     <div class="am-u-sm-2">
@@ -97,6 +97,9 @@
                                 <?php echo $vv['verify_time']?>
                             </div>
                             <div class="am-u-sm-3">
+                                <?php if($user['user_group_id'] == 1){?>
+                                    <a class="am-btn am-btn-primary finished " oid="<?php echo $vv['id']?>">完成</a>
+                                <?php }?>
                                 <a class="am-btn am-btn-primary" href="/?g=Ticket&m=Order&a=info&order_id=<?php echo $vv['id']?>">查看</a>
                             </div>
                         </li>
@@ -110,7 +113,7 @@
     </div>
         <div class="am-u-sm-12">
         <div class="am-panel am-panel-success">
-            <div class="am-panel-hd">已受理工单</div>
+            <div class="am-panel-hd">已完成工单</div>
             <ul class="am-list">
                 <li class="am-cf">
                     <div class="am-u-sm-2">
@@ -151,6 +154,9 @@
                                 <?php echo $vvv['finished_time']?>
                             </div>
                             <div class="am-u-sm-2">
+                                <?php if($user['user_group_id'] == 1){?>
+                                    <a class="am-btn am-btn-danger delete " oid="<?php echo $vvv['id']?>">删除</a>
+                                <?php }?>
                                 <a class="am-btn am-btn-primary" href="/?g=Ticket&m=Order&a=info&order_id=<?php echo $vvv['id']?>">查看</a>
                             </div>
                         </li>
@@ -196,8 +202,8 @@
 			                    html+= (v.order_type==1)?"设计":(v.order_type==2)?"开发":"BUG";
 			                    html+= '</div><div class="am-u-sm-3">'+v.add_time+'</div><div class="am-u-sm-3">';
 			                    <?php if($user['user_group_id'] == 1){?>
-                                    html+= '<a class="am-btn am-btn-primary via" vid="3">通过</a>'+
-                                           '<a class="am-btn am-btn-danger via" vid="4">不通过</a>';
+                                    html+= '<a class="am-btn am-btn-primary via" vid="1">通过</a>'+
+                                           '<a class="am-btn am-btn-danger via" vid="2">不通过</a>';
                                 <?php }elseif($user['user_group_id'] > 2 && $user['user_boss'] == 0){?>
                                     html+= '<a class="am-btn am-btn-primary agree" vid="1">同意</a>'+
                                     '<a class="am-btn am-btn-danger agree" vid="2">不同意</a>';
@@ -224,7 +230,12 @@
             		$.each(result, function(k, v){
 			                    html+= '<li class="am-cf"><div class="am-u-sm-2">'+v.order_sn+'</div><div class="am-u-sm-2">'+v.applicants_name+'</div><div class="am-u-sm-2">';
 			                    html+= (v.order_type==1)?"设计":(v.order_type==2)?"开发":"BUG";
-			                    html+= '</div><div class="am-u-sm-3">'+v.verify_time+'</div><div class="am-u-sm-3"><a class="am-btn am-btn-primary" href="/?g=Ticket&m=Order&a=info&order_id='+ v.id +'">查看</a></div> </li>';
+			                    html+= '</div><div class="am-u-sm-3">'+v.verify_time+'</div><div class="am-u-sm-3">';
+                                <?php if($user['user_group_id'] == 1){?>
+                                    html+= '<a class="am-btn am-btn-primary finished" oid="'+ v.id+'">完成</a>';
+                                <?php }?>
+                                html+= '<a class="am-btn am-btn-primary" href="/?g=Ticket&m=Order&a=info&order_id='+ v.id +'">查看</a>';
+                                html+= '</div> </li>';
 								});
             		$("#list2").html(html);
             	}
@@ -246,14 +257,71 @@
             		$.each(result, function(k, v){
 			                    html+= '<li class="am-cf"><div class="am-u-sm-2">'+v.order_sn+'</div><div class="am-u-sm-2">'+v.applicants_name+'</div><div class="am-u-sm-2">';
 			                    html+= (v.order_type==1)?"设计":(v.order_type==2)?"开发":"BUG";
-			                    html+= '</div><div class="am-u-sm-2">'+v.add_time+'</div><div class="am-u-sm-2">'+v.finished_time+'</div><div class="am-u-sm-2"><a class="am-btn am-btn-primary" href="/?g=Ticket&m=Order&a=info&order_id='+ v.id +'">查看</a></div> </li>';
+			                    html+= '</div><div class="am-u-sm-2">'+v.add_time+'</div><div class="am-u-sm-2">'+v.finished_time+'</div><div class="am-u-sm-2">';
+                                <?php if($user['user_group_id'] == 1){?>
+                                    html+= '<a class="am-btn am-btn-danger delete" oid="'+ v.id+'">删除</a>';
+                                <?php }?>
+                                html+= '<a class="am-btn am-btn-primary" href="/?g=Ticket&m=Order&a=info&order_id='+ v.id +'">查看</a>';
+                                html+= '</div> </li>';
 								});
             		$("#list3").html(html);
             	}
             });
         }
     });
-    
+
+    $(document).on('click', '.finished', function() {
+        var oid=$(this).attr("oid");
+        $.ajax({
+            type:"POST",
+            url:"/?g=Ticket&m=Order&a=finished",
+            data:{oid:oid},
+            dataType:"text",
+            success:function(data){
+                if(data==-1){
+                    alert("参数获取失败，请刷新");
+                }
+                else if(data==0){
+                    alert("操作失败，请稍候重试");
+                }
+                else if(data==1){
+//                    alert("操作成功");
+                }
+                else{
+                    alert("请重试");
+                }
+                location.reload();
+            }
+        });
+    });
+    $(document).on('click', '.delete', function() {
+        var oid=$(this).attr("oid");
+        var c=confirm("是否确认删除");
+        if(c){
+            $.ajax({
+                type:"POST",
+                url:"/?g=Ticket&m=Order&a=delete",
+                data:{oid:oid},
+                dataType:"text",
+                success:function(data){
+                    if(data==-1){
+                        alert("参数获取失败，请刷新");
+                    }
+                    else if(data==0){
+                        alert("删除失败，请稍候重试");
+                    }
+                    else if(data==1){
+//                        alert("操作成功");
+                    }
+                    else{
+                        alert("请重试");
+                    }
+                    location.reload();
+                }
+            });
+        }
+    });
+
     $(document).on('click', '.agree', function() {
            var oid=$(this).siblings("input").val();
            var verify=$(this).attr("vid");
@@ -272,7 +340,7 @@
             		alert("审核失败，请稍候重试");
             	}
             	else if(data==1){
-            		alert("审核成功");
+//            		alert("审核成功");
             	}
             	else{
             		alert("请重试");
@@ -285,7 +353,7 @@
     $(document).on('click', '.via', function() {
            var oid=$(this).siblings("input").val();
            var verify=$(this).attr("vid");
-           if(verify==3){
+           if(verify==1){
            		$.ajax({
 		           	type:"POST",
 		           	url:"/?g=Ticket&m=Order&a=technologyVerify",
@@ -299,7 +367,7 @@
 		            		alert("审核失败，请稍候重试");
 		            	}
 		            	else if(data==1){
-		            		alert("审核成功");
+//		            		alert("审核成功");
 		            	}
 		            	else{
 		            		alert("请重试");
@@ -325,7 +393,7 @@
 		            		alert("审核失败，请稍候重试");
 		            	}
 		            	else if(data==1){
-		            		alert("审核成功");
+//		            		alert("审核完成");
 		            	}
 		            	else{
 		            		alert("请重试");
