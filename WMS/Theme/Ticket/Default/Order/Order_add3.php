@@ -29,7 +29,7 @@
 			<div class="am-u-sm-2">
 				问题情况描述
 			</div>
-			<div class="am-fl">
+			<div class="am-u-sm-9">
 				<textarea id="editor_id" name="requirement" style="width:100%;height:300px;">
 				</textarea>
 			</div>
@@ -45,6 +45,16 @@
 </div>
 <script>
         KindEditor.ready(function(K) {
-                window.editor = K.create('#editor_id');
+                window.editor = K.create('#editor_id', {
+                	items : ['source', '|', 'fullscreen', 'undo', 'redo', 'print', 'cut', 'copy', 'paste',
+            'plainpaste', 'wordpaste', '|', 'justifyleft', 'justifycenter', 'justifyright',
+            'justifyfull', 'insertorderedlist', 'insertunorderedlist', 'indent', 'outdent', 'subscript',
+            'superscript', '|', 'selectall', 'clearhtml','quickformat','|',
+            'formatblock', 'fontname', 'fontsize', '|', 'forecolor', 'hilitecolor', 'bold',
+            'italic', 'underline', 'strikethrough', 'lineheight', 'removeformat', '|', 'image', 'table', 'hr', 'emoticons', 'link', 'unlink', '|', 'about'],
+					uploadJson : "./php/upload_json.php",//图片上传后的处理地址
+					fileManager:"./php/file_manager_json.php",
+					allowFileManager : true
+				});
         });
 </script>
