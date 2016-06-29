@@ -50,10 +50,12 @@ class Order extends \App\Ticket\Common
         $order_listA = \Model\OrderModel::getUserOrderList($ui, $ut, $ub, 0, 1, 10);
         $order_listB = \Model\OrderModel::getUserOrderList($ui, $ut, $ub, 1, 1, 10);
         $order_listC = \Model\OrderModel::getUserOrderList($ui, $ut, $ub, 2, 1, 10);
+        $order_listD = \Model\OrderModel::getUserOrderList($ui, $ut, $ub, 3, 1, 10);
         $this->assign('new',$order_listA['data']);
         $this->assign('now',$order_listB['data']);
         $this->assign('end',$order_listC['data']);
-        $this->assign('count',array("new"=>$order_listA['count'],"now"=>$order_listB['count'],"end"=>$order_listC['count']));
+        $this->assign('relationship',$order_listD['data']);
+        $this->assign('count',array("new"=>$order_listA['count'],"now"=>$order_listB['count'],"end"=>$order_listC['count'],"relationship"=>$order_listD['count']));
         $this->layout();
     }
 
@@ -65,17 +67,18 @@ class Order extends \App\Ticket\Common
         $where = " id = :id ";
         if($ut > 2){
             if($ub == 0){
-                $where .= " AND (applicants_boss_id = :uid1 OR applicants_id = :uid2) ";
+                $where .= " AND (applicants_boss_id = :uid1 OR applicants_id = :uid2 OR cc LIKE ':uid3') ";
                 $condition['uid1'] = $uid;
                 $condition['uid2'] = $uid;
+                $condition['uid3'] = "%,".$uid.",%";
             }else{
-                $where .= " AND applicants_id = :uid ";
-                $condition['uid'] = $uid;
+                $where .= " AND (applicants_id = :uid1 OR cc LIKE ':uid2') ";
+                $condition['uid1'] = $uid;
+                $condition['uid2'] = "%,".$uid.",%";
             }
         }
         $condition['id'] = $oid;
         $info = \Model\OrderModel::findOrderByWC($where,$condition);
-        if($info[''])
         $this->assign('info',$info);
         $this->layout();
     }
