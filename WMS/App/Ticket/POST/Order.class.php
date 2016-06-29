@@ -14,8 +14,8 @@ namespace App\Ticket\POST;
  */
 class Order extends \App\Ticket\Common
 {
-    public $config;
-    public $user;
+    private $config;
+    private $user;
     public function __init() {
         $this->config = require PES_PATH . 'Config/config.php';
         $this->user = $_SESSION['ticket'];
@@ -38,6 +38,9 @@ class Order extends \App\Ticket\Common
         if($data['order_type'] == 1){
             $data['order_sn'] = "S";
             $data['urgency_type']   = empty($_POST['urgency_type']) ? 0 : $_POST['urgency_type'];
+            if($data['urgency_type'] == 2){
+                $data['urgency_mark'] = $this->isP('urgency_mark', '紧急情况说明必须填写');
+            }
             $data['finish_time']    = $_POST['finish_time'];
             $design_type            = $this->isP('design_type',"请选择设计类型");
             $arr = array();
@@ -54,6 +57,9 @@ class Order extends \App\Ticket\Common
         }elseif($data['order_type'] == 2){
             $data['order_sn'] = "D";
             $data['urgency_type']   = empty($_POST['urgency_type']) ? 0 : $_POST['urgency_type'];
+            if($data['urgency_type'] == 2){
+                $data['urgency_mark'] = $this->isP('urgency_mark', '紧急情况说明必须填写');
+            }
             $data['finish_time']    = $_POST['finish_time'];
         }elseif($data['order_type'] == 3){
             $data['order_sn'] = "A";
@@ -70,6 +76,17 @@ class Order extends \App\Ticket\Common
         }else{
             $data['order_sn'] .= "01";
         }
+        $cc            = $this->isP('cc');
+        $arr = array();
+        if(count($cc) > 0){
+            foreach($cc as $k => $v){
+                if($v == "on")$arr[] = $k;
+            }
+        }
+        $data['cc']    = (count($arr) > 0) ? ",".implode(',',$arr)."," : "";
+        unset($cc);
+        unset($arr);
+
         if(!empty($_FILES['attachment']['tmp_name'])){
             if($_FILES['attachment']['size'] > 10485760){
                 $this->error("附件过大，不允许上传超过10M的附件!");

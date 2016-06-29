@@ -69,39 +69,41 @@ class OrderModel extends \Core\Model\Model {
             }
         }elseif($user_group_id == 2){
 
-        }elseif($user_group_id > 0){
-            if($user_boss>0){
-                if(isset($type)){
-                    switch($type){
-                        case 0 :
-                            $where .= "AND verify_type in('0','1') AND order_state <> 1 ";
-                            break;
-                        case 1 :
-                            $where .= "AND verify_type = 3 AND order_state <> 1  ";
-                            break;
-                        case 2:
-                            $where .= "AND (verify_type in('2','4','5') OR order_state = 1) ";
-                            break;
-                    }
-                }
-                if(isset($user_id) && !empty($user_id)){
-                    $where .= "AND applicants_id = ".$user_id." ";
-                }
+        }elseif($user_group_id > 2){
+            if($type == 3){
+                $where .= "AND cc LIKE '%,{$user_id},%' ";
             }else{
-                if(isset($type)){
-                    switch($type){
-                        case 0 :
-                            $where .= "AND verify_type = 0 AND order_state <> 1 ";
-                            break;
-                        case 1 :
-                            $where .= "AND verify_type in('1','3') AND order_state <> 1  ";
-                            break;
-                        case 2:
-                            $where .= "AND (verify_type in('2','4','5') OR order_state = 1) ";
-                            break;
+                if($user_boss>0){
+                    if(isset($type)){
+                        switch($type){
+                            case 0 :
+                                $where .= "AND verify_type in('0','1') AND order_state <> 1 ";
+                                break;
+                            case 1 :
+                                $where .= "AND verify_type = 3 AND order_state <> 1  ";
+                                break;
+                            case 2:
+                                $where .= "AND (verify_type in('2','4','5') OR order_state = 1) ";
+                                break;
+                        }
                     }
+                    $where .= "AND applicants_id = ".$user_id." ";
+                }else{
+                    if(isset($type)){
+                        switch($type){
+                            case 0 :
+                                $where .= "AND verify_type = 0 AND order_state <> 1 ";
+                                break;
+                            case 1 :
+                                $where .= "AND verify_type in('1','3') AND order_state <> 1  ";
+                                break;
+                            case 2:
+                                $where .= "AND (verify_type in('2','4','5') OR order_state = 1) ";
+                                break;
+                        }
+                    }
+                    $where .= " AND applicants_dep_id = ".$user_group_id." ";
                 }
-                $where .= " AND applicants_dep_id = ".$user_group_id." ";
             }
         }
         $result = self::getOrderByWPP($where,$page_start,$page_num);

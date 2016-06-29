@@ -15,11 +15,30 @@ use App\Ticket\PUT\Model;
  */
 class Order extends \App\Ticket\Common
 {
+    private $all_user,$user,$config;
     public final function __init() {
         $this->config = require PES_PATH . 'Config/config.php';
         $this->user = $_SESSION['ticket'];
         $this->user['group_name'] = $this->db('user_group')->field('user_group_name')->where("user_group_id=:user_group_id")->find(array('user_group_id'=>$this->user['user_group_id']))['user_group_name'];
         $this->assign('user',$this->user);
+        $this->all_user = array();
+        $res = array();
+        $group_list = $this->db('user_group')->field('user_group_id, user_group_name')->where('user_group_id > :user_group_id')->select(array('user_group_id'=>1));
+        $all_user = $this->db('user')->field('user_id, user_name, user_group_id')->where('user_group_id > :user_group_id')->order('user_boss ASC')->select(array('user_group_id'=>1));
+        if(!empty($group_list) && is_array($group_list)){
+            foreach ($group_list as $item) {
+                $res[$item['user_group_id']] = $item['user_group_name'];
+            }
+        }
+        unset($group_list);
+        if(!empty($all_user) && is_array($all_user)){
+            foreach($all_user as $v){
+                $this->all_user[$v['user_group_id']]['group_name'] = $res[$v['user_group_id']];
+                $this->all_user[$v['user_group_id']]['user_list'][$v['user_id']] = $v['user_name'];
+            }
+        }
+        unset($res);
+        $this->assign('all_user',$this->all_user);
     }
 
     public function index(){
@@ -56,6 +75,7 @@ class Order extends \App\Ticket\Common
         }
         $condition['id'] = $oid;
         $info = \Model\OrderModel::findOrderByWC($where,$condition);
+        if($info[''])
         $this->assign('info',$info);
         $this->layout();
     }
