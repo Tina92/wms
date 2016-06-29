@@ -112,9 +112,64 @@
         </div>
     </div>
         <div class="am-u-sm-12">
+        <div class="am-panel am-panel-secondary">
+            <div class="am-panel-hd">被抄送工单</div>
+            <ul class="am-list" id="list4">
+                <li class="am-cf">
+                    <div class="am-u-sm-2">
+                        工单号
+                    </div>
+            		<div class="am-u-sm-2">
+            			申请人
+            		</div>
+            		<div class="am-u-sm-2">
+            			申请类型
+            		</div>
+            		<div class="am-u-sm-2">
+            			申请时间
+            		</div>
+            		<div class="am-u-sm-2">
+            			申请部门
+            		</div>
+            		<div class="am-u-sm-2">
+            			操作
+            		</div>
+                </li>
+                <?php if(!empty($relationship)){?>
+                    <?php foreach($relationship as $vvvv){?>
+                        <li class="am-cf">
+                            <div class="am-u-sm-2">
+                                <?php echo $vvvv['order_sn']?>
+                            </div>
+                            <div class="am-u-sm-2">
+                                <?php echo $vvvv['applicants_name']?>
+                            </div>
+                            <div class="am-u-sm-2">
+                                <a><?php echo ($vvvv['order_type']==1)?"设计":(($vvvv['order_type']==2)?"开发":"BUG")?></a>
+                            </div>
+                            <div class="am-u-sm-2">
+                                <?php echo $vvvv['add_time']?>
+                            </div>
+                            <div class="am-u-sm-2">
+                                <?php echo $vvvv['applicants_dep_name']?>
+                            </div>
+                            <div class="am-u-sm-2">
+                              
+                                <a class="am-btn am-btn-primary" href="/?g=Ticket&m=Order&a=info&order_id=<?php echo $vvvv['id']?>">查看</a>
+                            </div>
+                        </li>
+                    <?php }?>
+                <?php }?>
+            </ul>
+            <div class="am-g">
+            	<div class="tcdPageCode page4"></div>
+            </div>
+        </div>
+    </div>
+    <div class="am-u-sm-12">
         <div class="am-panel am-panel-success">
             <div class="am-panel-hd">已完成工单</div>
-            <ul class="am-list">
+            <ul class="am-list" id="list3">
                 <li class="am-cf">
                     <div class="am-u-sm-2">
                         工单号
@@ -265,6 +320,31 @@
                                 html+= '</div> </li>';
 								});
             		$("#list3").html(html);
+            	}
+            });
+        }
+    });
+    
+    $(".page4").createPage({
+        pageCount:<?php echo $count['relationship']?>,
+        current:1,
+        backFn:function(p){
+            $.ajax({
+            	type:"POST",
+            	url:"/?g=Ticket&m=Order&a=getOrderListByPage",
+            	data:{page:p,type:3},
+            	dataType:"json",
+            	success:function(data){
+            		var result = data.data.data;
+            		var html ='<li class="am-cf"><div class="am-u-sm-2">工单号</div><div class="am-u-sm-2">申请人</div><div class="am-u-sm-2">申请类型</div><div class="am-u-sm-2">申请时间</div><div class="am-u-sm-2">申请部门</div><div class="am-u-sm-2">操作</div> </li>';
+            		$.each(result, function(k, v){
+			                    html+= '<li class="am-cf"><div class="am-u-sm-2">'+v.order_sn+'</div><div class="am-u-sm-2">'+v.applicants_name+'</div><div class="am-u-sm-2">';
+			                    html+= (v.order_type==1)?"设计":(v.order_type==2)?"开发":"BUG";
+			                    html+= '</div><div class="am-u-sm-2">'+v.add_time+'</div><div class="am-u-sm-2">'+v.applicants_dep_name+'</div><div class="am-u-sm-2">';
+                                html+= '<a class="am-btn am-btn-primary" href="/?g=Ticket&m=Order&a=info&order_id='+ v.id +'">查看</a>';
+                                html+= '</div> </li>';
+								});
+            		$("#list4").html(html);
             	}
             });
         }
