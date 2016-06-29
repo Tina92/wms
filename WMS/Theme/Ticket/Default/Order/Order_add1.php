@@ -15,53 +15,44 @@
 				<div class="am-u-sm-2">申请部门</div>
 				<input type="text" value="<?=$user['group_name'];?>" disabled="disabled" />
 		</div>
-		<div class="am-g am-u-sm-12">
+		<?php if($all_user){$i=1;?>
+			<div class="am-g am-u-sm-12">
 				<div class="am-u-sm-2">抄送</div>
 				<div class="am-fl am-u-sm-9">
-					<ul class="person">
-						
-					</ul>
+					<ul class="person"></ul>
 					<div class="company am-cf">
 						<div class="tab am-cf">
 							<ul class="am-nav am-nav-tabs">
-								<li class="depart am-active" id="eco">
-									<a href="javascript:void(0)">财务部</a>
-								</li>
-								<li class="depart" id="hr">
-									<a href="javascript:void(0)">人事部</a> 
-								</li>
-								<li class="depart" id="market">
-									<a href="javascript:void(0)">市场营销</a> 
-								</li>
+								<?php foreach ($all_user as $key => $v) {?>
+									<li class="depart <?php if($i==1){echo "am-active";}?>" id="department_<?=$key?>">
+										<a href="javascript:void(0)"><?=$v['group_name']?></a>
+									</li>
+								<?php $i++; }?>
 							</ul>
 						</div>
 						<div class="item">
-							<div class="choice eco">
+							<?php foreach ($all_user as $kk => $vv) {?>
+								<div class="choice department_<?=$kk?>">
 								<ul>
-									<li class="am-fl">
-										<label>
-											<input type="checkbox" value="1" un="周艳婷"/>
-											<span>周艳婷</span>
-										</label>
-									</li>
-									<li class="am-fl">
-										<label>
-											<input type="checkbox" value="2" un="周aaa"/>
-											<span>周aaa</span>
-										</label>
-									</li>
-									<li class="am-fl">
-										<label>
-											<input type="checkbox" value="3" un="周艳bb"/>
-											<span>周艳bb</span>
-										</label>
-									</li>
+									<?php if(!empty($vv['user_list']) && is_array($vv['user_list'])){?>
+										<?php foreach($vv['user_list'] as $kkk => $vvv){?>
+											<li class="am-fl">
+												<label>
+													<input type="checkbox" value="<?=$kkk?>" un="<?=$vvv?>"/>
+													<span><?=$vvv?></span>
+												</label>
+											</li>
+										<?php }?>
+									<?php }?>
 								</ul>
 							</div>
+							<?php }?>
+
 						</div>
 					</div>
 				</div>
-		</div>
+			</div>
+		<?php }?>
 		<div class="am-g" style="margin-bottom: 0;">
 			<div class="am-u-sm-6 ">
 				<div class="am-u-sm-4">紧迫程度</div>
