@@ -1,4 +1,5 @@
 /*---------------------------------------demo css--------------------------------------------*/
+ul,li{list-style: none;margin: 0px;padding: 0px;}
 .date_selector, .date_selector *{width: auto;height: auto;border: none;background: none;margin: 0;padding: 0;text-align: left;text-decoration: none;}
 .date_selector{background:#fbfbfb;border: 1px solid #ccc;padding: 10px;margin:0;margin-top:-1px;position: absolute;z-index:100000;display:none;border-radius: 3px;box-shadow: 0 0 5px #aaa;box-shadow:0 2px 2px #ccc; width:220px;}
 .date_selector_ieframe{position: absolute;z-index: 99999;display: none;}
@@ -41,6 +42,27 @@
             .am-u-sm-5{
                 padding: 0;
                 input[type="text"]{width: 90%;}
+            }
+        }
+        .person{
+            border: 1px solid #CCCCCC;
+            line-height: 1.2;
+            width: 80%;
+            margin: 0;
+           height: 3rem;
+           span{
+               background: #DDDDDD;
+               padding: 0.3rem;
+               margin: 0 0.5rem;
+               line-height: 3rem;
+               font-size: 1rem;
+           }
+        }
+        .company {
+            width: 80%;
+            .tab{margin-top: 20px;}
+            .item{padding: 5px 10px;
+                 li{padding: .4em 1em;}
             }
         }
     }

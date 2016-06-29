@@ -15,6 +15,97 @@
 				<div class="am-u-sm-2">申请部门</div>
 				<input type="text" value="<?=$user['group_name'];?>" disabled="disabled" />
 		</div>
+		<div class="am-g am-u-sm-12">
+				<div class="am-u-sm-2">抄送</div>
+				<div class="am-fl am-u-sm-9">
+					<ul class="person">
+						
+					</ul>
+					<div class="company am-cf">
+						<div class="tab am-cf">
+							<ul class="am-nav am-nav-tabs">
+								<li class="depart am-active" id="eco">
+									<a href="javascript:void(0)">财务部</a>
+								</li>
+								<li class="depart" id="hr">
+									<a href="javascript:void(0)">人事部</a> 
+								</li>
+								<li class="depart" id="market">
+									<a href="javascript:void(0)">市场营销</a> 
+								</li>
+							</ul>
+						</div>
+						<div class="item">
+							<div class="choice eco">
+								<ul>
+									<li class="am-fl">
+										<label>
+											<input type="checkbox" value="1" un="周艳婷"/>
+											<span>周艳婷</span>
+										</label>
+									</li>
+									<li class="am-fl">
+										<label>
+											<input type="checkbox" value="2" un="周aaa"/>
+											<span>周aaa</span>
+										</label>
+									</li>
+									<li class="am-fl">
+										<label>
+											<input type="checkbox" value="3" un="周艳bb"/>
+											<span>周艳bb</span>
+										</label>
+									</li>
+								</ul>
+							</div>
+							<div class="choice hr" style="display: none;">
+								<ul>
+									<li class="am-fl">
+										<label>
+											<input type="checkbox" value="4" un="aaaa"/>
+											<span>aaaa</span>
+										</label>
+									</li>
+									<li class="am-fl">
+										<label>
+											<input type="checkbox" value="5" un="vvvv"/>
+											<span>vvvv</span>
+										</label>
+									</li>
+									<li class="am-fl">
+										<label>
+											<input type="checkbox" value="6" un="ccc"/>
+											<span>ccc</span>
+										</label>
+									</li>
+									<li class="am-fl">
+										<label>
+											<input type="checkbox" value="7" un="ddd"/>
+											<span>ddd</span>
+										</label>
+									</li>
+								</ul>
+							</div>
+							<div class="choice market" style="display: none;">
+								<ul>
+									<li class="am-fl">
+										<label>
+											<input type="checkbox" value="8" un="eee"/>
+											<span>eee</span>
+										</label>
+									</li>
+									<li class="am-fl">
+										<label>
+											<input type="checkbox" value="9" un="fff"/>
+											<span>fff</span>
+										</label>
+									</li>
+								</ul>
+							</div>
+						</div>
+					</div>
+				</div>
+		</div>
 		<div class="am-g" style="margin-bottom: 0;">
 			<div class="am-u-sm-6 ">
 				<div class="am-u-sm-4">紧迫程度</div>
@@ -29,10 +120,17 @@
 				<div class="am-u-sm-2">上线时间</div>
 				<input name="finish_time"  class="Wdate" type="text" onClick="WdatePicker({minDate:'%y-%M-%d'})" style="width: 35%;">
 			</div>
+			
 		</div>
+		<div class="am-g am-u-sm-12 data">
+				<div class="am-u-sm-2">
+					紧迫理由
+				</div>
+					<input type="text" class="required" />
+			</div>
 		<div class="am-g am-u-sm-12">
 		    <div class="am-u-sm-2">设计类型</div>
-		    <div class="am-fl">
+		    <div class="am-fl design">
 		        <input type="checkbox" name="design_type[1]" />
 		        <label>产品详情页</label>&nbsp;
 		        <input type="checkbox" name="design_type[2]" />
@@ -116,7 +214,7 @@
         		$(".data").hide();
         	}
         });
-        $(document).on("change","input[type='checkbox']",function(){
+        $(document).on("change",".design input[type='checkbox']",function(){
         	if($(this).hasClass("hd")){
 	        	if($(".hd").eq(0).get(0).checked||$(".hd").eq(1).get(0).checked){
 	        		$('.Schedules').show();
@@ -124,5 +222,30 @@
 	        		$('.Schedules').hide();
 	        	}
         	}
+        });
+        $(".depart").click(function(){
+        	var id=$(this).attr("id");
+        	$(".choice").hide();
+        	$("."+id).show();
+        	$(".depart").removeClass("am-active");
+        	$(this).addClass("am-active");
+        });
+        
+         $(document).on("change",".choice input[type='checkbox']",function(){
+        	if($(this).is(':checked')){
+        		var html = "<span vid='"+$(this).val()+"'>"+$(this).attr('un')+"</span>";
+        		$('.person').append(html);
+        	}else{
+        		$("span[vid='"+$(this).val()+"']").remove();
+        	}
+        });
+        $(document).on("click","input[type='submit']",function(){
+        	if($("#first").is(':checked')){
+        		if($(".required").val()==null||$(".required").val()==""){
+	        		alert("请输入紧迫理由");
+	        		return false;
+	        	}
+        	}
+        	
         });
 </script>
