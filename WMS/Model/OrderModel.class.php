@@ -134,19 +134,7 @@ class OrderModel extends \Core\Model\Model {
                 }
             }
         }
-        $array = array();
-        $dep_list = self::db('user_group')->field('user_group_id,user_group_name')->where('user_group_status = 1')->select();
-        if($dep_list){
-            foreach ($dep_list as $item) {
-                $array[$item['user_group_id']] = $item['user_group_name'];
-            }
-        }
         $result = self::getOrderByWPP($where,$page_start,$page_num);
-        foreach($result as $key => $v){
-            $result[$key]['applicants_dep_name'] = $array[$v['applicants_dep_id']];
-        }
-        unset($dep_list);
-        unset($array);
         return $result;
     }
 
@@ -163,6 +151,20 @@ class OrderModel extends \Core\Model\Model {
             ->order('id DESC')
             ->limit("{$page_start},{$page_num}")
             ->select();
+			
+		$array = array();
+        $dep_list = self::db('user_group')->field('user_group_id,user_group_name')->where('user_group_status = 1')->select();
+        if($dep_list){
+            foreach ($dep_list as $item) {
+                $array[$item['user_group_id']] = $item['user_group_name'];
+            }
+        }
+			foreach($res['data'] as $key => $v){
+            $res['data'][$key]['applicants_dep_name'] = $array[$v['applicants_dep_id']];
+        }
+        unset($dep_list);
+        unset($array);
+			
         $count = count(self::db('work_order')->where($where)->select());
         $res['count'] = ceil($count/10);//取得当前总页数
         if($res){

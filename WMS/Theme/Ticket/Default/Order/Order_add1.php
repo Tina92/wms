@@ -38,7 +38,7 @@
 										<?php foreach($vv['user_list'] as $kkk => $vvv){?>
 											<li class="am-fl">
 												<label>
-													<input type="checkbox" value="<?=$kkk?>" un="<?=$vvv?>"/>
+													<input type="checkbox" value="<?=$kkk?>" un="<?=$vvv?>" name="cc[]" />
 													<span><?=$vvv?></span>
 												</label>
 											</li>
@@ -73,7 +73,7 @@
 				<div class="am-u-sm-2">
 					紧迫理由
 				</div>
-					<input type="text" class="required" />
+					<input type="text" name="urgency_mark" class="required" />
 			</div>
 		<div class="am-g am-u-sm-12">
 		    <div class="am-u-sm-2">设计类型</div>
