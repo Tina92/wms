@@ -15,6 +15,44 @@
 			<div class="am-u-sm-2">申请部门</div>
 			<input type="text" value="<?=$user['group_name'];?>" disabled="disabled" />
 		</div>
+		<?php if($all_user){$i=1;?>
+			<div class="am-g am-u-sm-12">
+				<div class="am-u-sm-2">抄送</div>
+				<div class="am-fl am-u-sm-9">
+					<ul class="person"></ul>
+					<div class="company am-cf">
+						<div class="tab am-cf">
+							<ul class="am-nav am-nav-tabs">
+								<?php foreach ($all_user as $key => $v) {?>
+									<li class="depart <?php if($i==1){echo "am-active";}?>" id="department_<?=$key?>">
+										<a href="javascript:void(0)"><?=$v['group_name']?></a>
+									</li>
+								<?php $i++; }?>
+							</ul>
+						</div>
+						<div class="item">
+							<?php foreach ($all_user as $kk => $vv) {?>
+								<div class="choice department_<?=$kk?>">
+								<ul>
+									<?php if(!empty($vv['user_list']) && is_array($vv['user_list'])){?>
+										<?php foreach($vv['user_list'] as $kkk => $vvv){?>
+											<li class="am-fl">
+												<label>
+													<input type="checkbox" value="<?=$kkk?>" un="<?=$vvv?>"/>
+													<span><?=$vvv?></span>
+												</label>
+											</li>
+										<?php }?>
+									<?php }?>
+								</ul>
+							</div>
+							<?php }?>
+
+						</div>
+					</div>
+				</div>
+			</div>
+		<?php }?>
 		<div class="am-g" style="margin-bottom: 0;">
 			<div class="am-u-sm-6 ">
 				<div class="am-u-sm-4">紧迫程度</div>
@@ -30,6 +68,12 @@
 				<input name="finish_time" class="Wdate" type="text" onClick="WdatePicker({minDate:'%y-%M-%d'})" style="width: 35%;">
 			</div>
 		</div>
+		<div class="am-g am-u-sm-12 data">
+				<div class="am-u-sm-2">
+					紧迫理由
+				</div>
+					<input type="text" class="required" />
+			</div>
 		<div class="am-g am-u-sm-12">
 			<div class="am-u-sm-2">
 				添加附件
@@ -76,5 +120,39 @@
         	}else{
         		$(".data").hide();
         	}
+        });
+        $(document).on("change",".design input[type='checkbox']",function(){
+        	if($(this).hasClass("hd")){
+	        	if($(".hd").eq(0).get(0).checked||$(".hd").eq(1).get(0).checked){
+	        		$('.Schedules').show();
+	        	}else{
+	        		$('.Schedules').hide();
+	        	}
+        	}
+        });
+        $(".depart").click(function(){
+        	var id=$(this).attr("id");
+        	$(".choice").hide();
+        	$("."+id).show();
+        	$(".depart").removeClass("am-active");
+        	$(this).addClass("am-active");
+        });
+        
+         $(document).on("change",".choice input[type='checkbox']",function(){
+        	if($(this).is(':checked')){
+        		var html = "<span vid='"+$(this).val()+"'>"+$(this).attr('un')+"</span>";
+        		$('.person').append(html);
+        	}else{
+        		$("span[vid='"+$(this).val()+"']").remove();
+        	}
+        });
+        $(document).on("click","input[type='submit']",function(){
+        	if($("#first").is(':checked')){
+        		if($(".required").val()==null||$(".required").val()==""){
+	        		alert("请输入紧迫理由");
+	        		return false;
+	        	}
+        	}
+        	
         });
 </script>
