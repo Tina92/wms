@@ -21,31 +21,38 @@
 	</div>
 	<div class="am-form">
 		<div class="am-g am-u-sm-12">
-				<div class="am-u-sm-3">申请人</div>
-				<div class="am-u-sm-9">
-					<?=$info['applicants_name']; ?>
-				</div>
+			<div class="am-u-sm-3">申请人</div>
+			<div class="am-u-sm-9">
+				<?=$info['applicants_name']; ?>
+			</div>
 	    </div>
 		<div class="am-g am-u-sm-12">
-				<div class="am-u-sm-3">申请部门</div>
-				<div class="am-u-sm-9"><?=$info['applicants_dep_name'];?></div>
+			<div class="am-u-sm-3">申请部门</div>
+			<div class="am-u-sm-9"><?=$info['applicants_dep_name'];?></div>
 		</div>
 		<div class="am-g am-u-sm-12">
-				<div class="am-u-sm-3">工单号</div>
-				<div class="am-u-sm-9"><?=$info['order_sn']; ?></div>
+			<div class="am-u-sm-3">工单号</div>
+			<div class="am-u-sm-9"><?=$info['order_sn']; ?></div>
 		</div>
+		<?php if($info['cc']){?>
+			<div class="am-g am-u-sm-12">
+				<div class="am-u-sm-3">抄送用户</div>
+				<div class="am-u-sm-9"><?=$info['cc']; ?>
+				</div>
+			</div>
+		<?php }?>
 		<div class="am-g am-u-sm-12">
-				<div class="am-u-sm-3">工单类型</div>
-				<div class="am-u-sm-9"><?php echo ($info['order_type']==1)?"设计":(($info['order_type']==2)?"开发":"BUG")?></div>
+			<div class="am-u-sm-3">工单类型</div>
+			<div class="am-u-sm-9"><?php echo ($info['order_type']==1)?"设计":(($info['order_type']==2)?"开发":"BUG")?></div>
 		</div>
 		<?php if($info['order_type'] == 3){?>
 			<div class="am-g am-u-sm-12">
-					<div class="am-u-sm-3">网页地址或名称</div>
-					<div class="am-u-sm-9"><?=$info['bug_url']; ?></div>
+				<div class="am-u-sm-3">网页地址或名称</div>
+				<div class="am-u-sm-9"><?=$info['bug_url']; ?></div>
 			</div>
 		<?php }else{?>
 			<div class="am-g am-u-sm-12">
-					<div class="am-u-sm-3">紧迫程度</div>
+				<div class="am-u-sm-3">紧迫程度</div>
 				<?php if($info['urgency_type'] == 2){?>
 					<div class="am-u-sm-3"><?php echo ($info['urgency_type']==1)?"重要":(($info['urgency_type']==2)?"紧急":"一般")?></div>
 					<div class="am-u-sm-6">
@@ -60,6 +67,12 @@
 					<div class="am-u-sm-9"><?php echo ($info['urgency_type']==1)?"重要":(($info['urgency_type']==2)?"紧急":"一般")?></div>
 				<?php }?>
 			</div>
+			<?php if($info['urgency_type'] == 2){?>
+				<div class="am-g am-u-sm-12">
+					<div class="am-u-sm-3">紧迫理由</div>
+					<div class="am-u-sm-9"><?=$info['urgency_mark']; ?></div>
+				</div>
+			<?php }?>
 		<?php }?>
 		<?php if($info['order_type'] == 1){?>
 			<div class="am-g am-u-sm-12">

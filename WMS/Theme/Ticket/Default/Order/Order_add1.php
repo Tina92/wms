@@ -58,50 +58,6 @@
 									</li>
 								</ul>
 							</div>
-							<div class="choice hr" style="display: none;">
-								<ul>
-									<li class="am-fl">
-										<label>
-											<input type="checkbox" value="4" un="aaaa"/>
-											<span>aaaa</span>
-										</label>
-									</li>
-									<li class="am-fl">
-										<label>
-											<input type="checkbox" value="5" un="vvvv"/>
-											<span>vvvv</span>
-										</label>
-									</li>
-									<li class="am-fl">
-										<label>
-											<input type="checkbox" value="6" un="ccc"/>
-											<span>ccc</span>
-										</label>
-									</li>
-									<li class="am-fl">
-										<label>
-											<input type="checkbox" value="7" un="ddd"/>
-											<span>ddd</span>
-										</label>
-									</li>
-								</ul>
-							</div>
-							<div class="choice market" style="display: none;">
-								<ul>
-									<li class="am-fl">
-										<label>
-											<input type="checkbox" value="8" un="eee"/>
-											<span>eee</span>
-										</label>
-									</li>
-									<li class="am-fl">
-										<label>
-											<input type="checkbox" value="9" un="fff"/>
-											<span>fff</span>
-										</label>
-									</li>
-								</ul>
-							</div>
 						</div>
 					</div>
 				</div>

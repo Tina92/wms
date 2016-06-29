@@ -19,6 +19,9 @@ class OrderModel extends \Core\Model\Model {
         }else{
             $result['applicants_dep_name'] = self::db('user_group')->where("user_group_id = {$result['applicants_dep_id']}")->find()['user_group_name'];
             $result['boss_name'] = self::db('user')->where("user_id = {$result['applicants_boss_id']}")->find()['user_name'];
+            if($result['cc']){
+                $result['cc'] = self::getUserName(explode(",",substr($result['cc'],1,-1)));
+            }
         }
         return $result;
     }
@@ -36,6 +39,31 @@ class OrderModel extends \Core\Model\Model {
         }else{
             $result['applicants_dep_name'] = self::db('user_group')->where("user_group_id = {$result['applicants_dep_id']}")->find()['user_group_name'];
             $result['boss_name'] = self::db('user')->where("user_id = {$result['applicants_boss_id']}")->find()['user_name'];
+            if($result['cc']){
+                $result['cc'] = self::getUserName(explode(",",substr($result['cc'],1,-1)));
+            }
+        }
+        return $result;
+    }
+
+    private static function getUserName($user_list){
+        $result = '';
+        if(is_array($user_list) && !empty($user_list)){
+            $arr = array();
+            $res = self::db('user')->field('user_id,user_name')->where('user_status = :user_status')->select(array('user_status'=>'1'));
+            if($res){
+                foreach ($res as $re) {
+                    $arr[$re['user_id']] = $re['user_name'];
+                }
+            }
+            foreach ($user_list as $key => $item) {
+                if($key > 0){
+                    $result .="、";
+                }
+                $result .= $arr[$item];
+            }
+            unset($arr);
+            unset($res);
         }
         return $result;
     }
