@@ -24,6 +24,7 @@ class Order extends \App\Ticket\Common
 
     public function index()
     {
+
         $data['order_type']         = $this->isP('order_type', '系统参数错误，请重新打开提交工单页面再试');
         $data['applicants_id']      = $this->isP('applicants_id', '系统参数错误，请重新登录再试');
         $data['applicants_name']    = $this->isP('applicants_name', '系统参数错误，请重新登录再试');
@@ -77,6 +78,7 @@ class Order extends \App\Ticket\Common
             $data['order_sn'] .= "01";
         }
         $cc            = $this->isP('cc');
+        print_r($cc);
         $arr = array();
         if(count($cc) > 0){
             foreach($cc as $k => $v){
@@ -86,7 +88,7 @@ class Order extends \App\Ticket\Common
         $data['cc']    = (count($arr) > 0) ? ",".implode(',',$arr)."," : "";
         unset($cc);
         unset($arr);
-
+        print_r($data);exit;
         if(!empty($_FILES['attachment']['tmp_name'])){
             if($_FILES['attachment']['size'] > 10485760){
                 $this->error("附件过大，不允许上传超过10M的附件!");

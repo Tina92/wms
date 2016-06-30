@@ -38,7 +38,7 @@
 										<?php foreach($vv['user_list'] as $kkk => $vvv){?>
 											<li class="am-fl">
 												<label>
-													<input type="checkbox" value="<?=$kkk?>" un="<?=$vvv?>"/>
+													<input type="checkbox" un="<?=$vvv?>" name="cc[<?=$kkk?>]"/>
 													<span><?=$vvv?></span>
 												</label>
 											</li>
