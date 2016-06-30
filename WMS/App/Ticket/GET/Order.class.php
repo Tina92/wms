@@ -50,12 +50,16 @@ class Order extends \App\Ticket\Common
         $order_listA = \Model\OrderModel::getUserOrderList($ui, $ut, $ub, 0, 1, 10);
         $order_listB = \Model\OrderModel::getUserOrderList($ui, $ut, $ub, 1, 1, 10);
         $order_listC = \Model\OrderModel::getUserOrderList($ui, $ut, $ub, 2, 1, 10);
-        $order_listD = \Model\OrderModel::getUserOrderList($ui, $ut, $ub, 3, 1, 10);
         $this->assign('new',$order_listA['data']);
         $this->assign('now',$order_listB['data']);
         $this->assign('end',$order_listC['data']);
-        $this->assign('relationship',$order_listD['data']);
-        $this->assign('count',array("new"=>$order_listA['count'],"now"=>$order_listB['count'],"end"=>$order_listC['count'],"relationship"=>$order_listD['count']));
+        $count = array("new"=>$order_listA['count'],"now"=>$order_listB['count'],"end"=>$order_listC['count']);
+        if($ut > 2){
+            $order_listD = \Model\OrderModel::getUserOrderList($ui, $ut, $ub, 3, 1, 10);
+            $this->assign('relationship',$order_listD['data']);
+            @array_merge($count,array("relationship"=>$order_listD['count']));
+        }
+        $this->assign('count',$count);
         $this->layout();
     }
 
