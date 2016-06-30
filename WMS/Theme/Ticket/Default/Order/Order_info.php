@@ -54,7 +54,7 @@
 			<div class="am-g am-u-sm-12">
 				<div class="am-u-sm-3">紧迫程度</div>
 				<?php if($info['urgency_type'] == 2){?>
-					<div class="am-u-sm-3"><?php echo ($info['urgency_type']==1)?"重要":(($info['urgency_type']==2)?"紧急":"一般")?></div>
+					<div class="am-u-sm-3"><?php echo ($info['urgency_type']==1)?"重要 (正常排期，你做事很有计划条理)":(($info['urgency_type']==2)?"紧急 (紧急排期,插别人队可不好喔~)":"一般 (无排期要求，你很有远见和规划能力)")?></div>
 					<div class="am-u-sm-6">
 						<div class="am-u-sm-4">
 							上线时间
@@ -64,12 +64,12 @@
 						</div>
 					</div>
 				<?php }else{?>
-					<div class="am-u-sm-9"><?php echo ($info['urgency_type']==1)?"重要":(($info['urgency_type']==2)?"紧急":"一般")?></div>
+					<div class="am-u-sm-9"><?php echo ($info['urgency_type']==1)?"重要 (正常排期，你做事很有计划条理)":(($info['urgency_type']==2)?"紧急 (紧急排期,插别人队可不好喔~)":"一般 (无排期要求，你很有远见和规划能力)")?></div>
 				<?php }?>
 			</div>
 			<?php if($info['urgency_type'] == 2){?>
 				<div class="am-g am-u-sm-12">
-					<div class="am-u-sm-3">紧迫理由</div>
+					<div class="am-u-sm-3">紧急原因</div>
 					<div class="am-u-sm-9"><?=$info['urgency_mark']; ?></div>
 				</div>
 			<?php }?>
