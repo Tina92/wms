@@ -38,7 +38,7 @@
 										<?php foreach($vv['user_list'] as $kkk => $vvv){?>
 											<li class="am-fl">
 												<label>
-													<input type="checkbox" un="<?=$vvv?>" name="cc[<?=$kkk?>]"/>
+													<input type="checkbox" un="<?=$vvv?>" name="cc[<?=$kkk?>]" vid="<?=$kkk?>"/>
 													<span><?=$vvv?></span>
 												</label>
 											</li>
@@ -142,14 +142,14 @@
 			$(".pq").hide();
 			$("."+id).show();
 		});
-         $(document).on("change",".choice input[type='checkbox']",function(){
-        	if($(this).is(':checked')){
-        		var html = "<span vid='"+$(this).val()+"'>"+$(this).attr('un')+"</span>";
-        		$('.person').append(html);
-        	}else{
-        		$("span[vid='"+$(this).val()+"']").remove();
-        	}
-        });
+		$(document).on("change",".choice input[type='checkbox']",function(){
+			if($(this).is(':checked')){
+				var html = "<span vid='"+$(this).attr('vid')+"'>"+$(this).attr('un')+"</span>";
+				$('.person').append(html);
+			}else{
+				$("span[vid='"+$(this).attr('vid')+"']").remove();
+			}
+		});
         $(document).on("click","input[type='submit']",function(){
         	if($("#first").is(':checked')){
         		if($(".required").val()==null||$(".required").val()==""){

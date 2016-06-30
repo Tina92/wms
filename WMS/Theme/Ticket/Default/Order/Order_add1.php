@@ -182,13 +182,13 @@
 			$(".pq").hide();
 			$("."+id).show();
 		});
-         $(document).on("change",".choice input[type='checkbox']",function(){
-        	if($(this).is(':checked')){
-        		var html = "<span vid='"+$(this).attr('vid')+"'>"+$(this).attr('un')+"</span>";
-        		$('.person').append(html);
-        	}else{
-        		$("span[vid='"+$(this).attr('vid')+"']").remove();
-        	}
+		$(document).on("change",".choice input[type='checkbox']",function(){
+			if($(this).is(':checked')){
+				var html = "<span vid='"+$(this).attr('vid')+"'>"+$(this).attr('un')+"</span>";
+				$('.person').append(html);
+			}else{
+				$("span[vid='"+$(this).attr('vid')+"']").remove();
+			}
         });
         $(document).on("click","input[type='submit']",function(){
         	if($("#first").is(':checked')){
