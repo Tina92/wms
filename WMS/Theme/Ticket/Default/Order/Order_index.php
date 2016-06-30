@@ -111,7 +111,8 @@
             </div>
         </div>
     </div>
-        <div class="am-u-sm-12">
+    <?php if($user['user_group_id'] > 2){?>
+    <div class="am-u-sm-12">
         <div class="am-panel am-panel-secondary">
             <div class="am-panel-hd">被抄送工单</div>
             <ul class="am-list" id="list4">
@@ -166,6 +167,7 @@
             </div>
         </div>
     </div>
+    <?php }?>
     <div class="am-u-sm-12">
         <div class="am-panel am-panel-success">
             <div class="am-panel-hd">已完成工单</div>
@@ -324,7 +326,7 @@
             });
         }
     });
-    
+    <?php if($user['user_group_id'] > 2){?>
     $(".page4").createPage({
         pageCount:<?php echo $count['relationship']?>,
         current:1,
@@ -349,7 +351,7 @@
             });
         }
     });
-
+    <?php }?>
     $(document).on('click', '.finished', function() {
         var oid=$(this).attr("oid");
         $.ajax({
