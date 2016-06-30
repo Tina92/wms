@@ -49,20 +49,27 @@ ul,li{list-style: none;margin: 0px;padding: 0px;}
             line-height: 1.2;
             width: 80%;
             margin: 0;
-           height: 3rem;
+           min-height: 3rem;
+           word-wrap : break-word;
            span{
                background: #DDDDDD;
                padding: 0.3rem;
                margin: 0 0.5rem;
                line-height: 3rem;
                font-size: 1rem;
+               word-break: keep-all;
            }
         }
         .company {
             width: 80%;
             .tab{margin-top: 20px;}
             .item{padding: 5px 10px;
-                 li{padding: .4em 1em;}
+                .choice{
+                    display: none;
+                    li{padding: .4em 1em;}
+                }
+                .choice:first-child{display: block;}
+                 
             }
         }
     }

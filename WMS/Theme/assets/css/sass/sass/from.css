@@ -170,21 +170,27 @@ ul, li {
     line-height: 1.2;
     width: 80%;
     margin: 0;
-    height: 3rem; }
+    min-height: 3rem;
+    word-wrap: break-word; }
     .am-form .am-u-sm-12 .person span {
       background: #DDDDDD;
       padding: 0.3rem;
       margin: 0 0.5rem;
       line-height: 3rem;
-      font-size: 1rem; }
+      font-size: 1rem;
+      word-break: keep-all; }
   .am-form .am-u-sm-12 .company {
     width: 80%; }
     .am-form .am-u-sm-12 .company .tab {
       margin-top: 20px; }
     .am-form .am-u-sm-12 .company .item {
       padding: 5px 10px; }
-      .am-form .am-u-sm-12 .company .item li {
-        padding: .4em 1em; }
+      .am-form .am-u-sm-12 .company .item .choice {
+        display: none; }
+        .am-form .am-u-sm-12 .company .item .choice li {
+          padding: .4em 1em; }
+      .am-form .am-u-sm-12 .company .item .choice:first-child {
+        display: block; }
   .am-form .am-pagination-centered {
     padding-right: 10%; }
 
