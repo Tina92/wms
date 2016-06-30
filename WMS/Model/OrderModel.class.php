@@ -96,10 +96,14 @@ class OrderModel extends \Core\Model\Model {
                 }
             }
         }elseif($user_group_id == 2){
-
+            if($type == 3){
+                $where .= "AND cc LIKE '%,".$user_id.",%' ";
+            }else{
+                $where .= "AND delete_state <> 0 ";
+            }
         }elseif($user_group_id > 2){
             if($type == 3){
-                $where .= "AND cc LIKE '%,{$user_id},%' ";
+                $where .= "AND cc LIKE '%,".$user_id.",%' ";
             }else{
                 if($user_boss>0){
                     if(isset($type)){

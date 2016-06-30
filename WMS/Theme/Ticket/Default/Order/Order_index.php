@@ -111,7 +111,7 @@
             </div>
         </div>
     </div>
-    <?php if($user['user_group_id'] > 2){?>
+    <?php if($user['user_group_id'] > 1){?>
     <div class="am-u-sm-12">
         <div class="am-panel am-panel-secondary">
             <div class="am-panel-hd">被抄送工单</div>
@@ -326,7 +326,7 @@
             });
         }
     });
-    <?php if($user['user_group_id'] > 2){?>
+    <?php if($user['user_group_id'] > 1){?>
     $(".page4").createPage({
         pageCount:<?php echo $count['relationship']?>,
         current:1,

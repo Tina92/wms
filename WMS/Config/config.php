@@ -4,7 +4,7 @@
 'DB_HOST' => 'localhost',
 'DB_NAME' => 'wms',
 'DB_USER' => 'root',
-'DB_PWD' => '',
+'DB_PWD' => 'root',
 'DB_PORT' => '3306',
 'DB_PREFIX' => 'pes_',
 'PRIVATE_KEY' => '818c71f811',
@@ -16,7 +16,7 @@
 'FILE_CACHE_TIME' => '1800',
 'LOG_PATH' => '/log',
 'LOG_DELETE' => '7',
-'UPLOAD_PATH' => 'upload/',
+'UPLOAD_PATH' => 'Upload/',
 'URLMODEL' => array(
 'INDEX' => '0',
 'SUFFIX' => '1',

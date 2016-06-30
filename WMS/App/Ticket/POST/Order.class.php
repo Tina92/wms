@@ -78,7 +78,6 @@ class Order extends \App\Ticket\Common
             $data['order_sn'] .= "01";
         }
         $cc            = $this->isP('cc');
-        print_r($cc);
         $arr = array();
         if(count($cc) > 0){
             foreach($cc as $k => $v){
@@ -88,7 +87,6 @@ class Order extends \App\Ticket\Common
         $data['cc']    = (count($arr) > 0) ? ",".implode(',',$arr)."," : "";
         unset($cc);
         unset($arr);
-        print_r($data);exit;
         if(!empty($_FILES['attachment']['tmp_name'])){
             if($_FILES['attachment']['size'] > 10485760){
                 $this->error("附件过大，不允许上传超过10M的附件!");

@@ -24,7 +24,7 @@ class Order extends \App\Ticket\Common
         $this->all_user = array();
         $res = array();
         $group_list = $this->db('user_group')->field('user_group_id, user_group_name')->where('user_group_id > :user_group_id')->select(array('user_group_id'=>1));
-        $all_user = $this->db('user')->field('user_id, user_name, user_group_id')->where('user_group_id > :user_group_id')->order('user_boss ASC')->select(array('user_group_id'=>1));
+        $all_user = $this->db('user')->field('user_id, user_name, user_group_id')->where('user_group_id > :user_group_id AND user_id <> :user_id')->order('user_group_id ASC, user_boss ASC, user_id ASC ')->select(array('user_group_id'=>1,'user_id'=>$this->user['user_id']));
         if(!empty($group_list) && is_array($group_list)){
             foreach ($group_list as $item) {
                 $res[$item['user_group_id']] = $item['user_group_name'];
@@ -54,10 +54,10 @@ class Order extends \App\Ticket\Common
         $this->assign('now',$order_listB['data']);
         $this->assign('end',$order_listC['data']);
         $count = array("new"=>$order_listA['count'],"now"=>$order_listB['count'],"end"=>$order_listC['count']);
-        if($ut > 2){
+        if($ut > 1){
             $order_listD = \Model\OrderModel::getUserOrderList($ui, $ut, $ub, 3, 1, 10);
             $this->assign('relationship',$order_listD['data']);
-            @array_merge($count,array("relationship"=>$order_listD['count']));
+            $count['relationship'] = $order_listD['count'];
         }
         $this->assign('count',$count);
         $this->layout();
@@ -69,16 +69,14 @@ class Order extends \App\Ticket\Common
         $ut = isset($this->user['user_group_id']) ? $this->user['user_group_id'] : $_SESSION['ticket']['user_group_id'];
         $ub = isset($this->user['user_boss']) ? $this->user['user_boss'] : $_SESSION['ticket']['user_boss'];
         $where = " id = :id ";
-        if($ut > 2){
+        if($ut > 1){
             if($ub == 0){
-                $where .= " AND (applicants_boss_id = :uid1 OR applicants_id = :uid2 OR cc LIKE ':uid3') ";
+                $where .= " AND (applicants_boss_id = :uid1 OR applicants_id = :uid2 OR cc LIKE '%,{$uid},%') ";
                 $condition['uid1'] = $uid;
                 $condition['uid2'] = $uid;
-                $condition['uid3'] = "%,".$uid.",%";
             }else{
-                $where .= " AND (applicants_id = :uid1 OR cc LIKE ':uid2') ";
+                $where .= " AND (applicants_id = :uid1 OR cc LIKE '%,{$uid},%') ";
                 $condition['uid1'] = $uid;
-                $condition['uid2'] = "%,".$uid.",%";
             }
         }
         $condition['id'] = $oid;
