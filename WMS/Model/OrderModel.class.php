@@ -155,12 +155,14 @@ class OrderModel extends \Core\Model\Model {
 		$array = array();
         $dep_list = self::db('user_group')->field('user_group_id,user_group_name')->where('user_group_status = 1')->select();
         if($dep_list){
-            foreach ($dep_list as $item) {
+            foreach ($dep_list as $item){
                 $array[$item['user_group_id']] = $item['user_group_name'];
             }
         }
+        if($res['data']){
 			foreach($res['data'] as $key => $v){
-            $res['data'][$key]['applicants_dep_name'] = $array[$v['applicants_dep_id']];
+                $res['data'][$key]['applicants_dep_name'] = $array[$v['applicants_dep_id']];
+            }
         }
         unset($dep_list);
         unset($array);
