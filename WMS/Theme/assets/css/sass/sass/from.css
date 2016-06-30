@@ -145,6 +145,12 @@ ul, li {
 .data, .Schedules {
   display: none; }
 
+.hide {
+  display: none; }
+
+.pq {
+  color: #e70012; }
+
 .container {
   padding: 1.5rem 3rem; }
   .container h2 {
