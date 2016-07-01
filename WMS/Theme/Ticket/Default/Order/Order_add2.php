@@ -57,15 +57,15 @@
 			<div class="am-u-sm-6 ">
 				<div class="am-u-sm-4">紧迫程度</div>
 				<input type="radio" id="third" name="urgency_type" value="0" checked />
-				<label for="third">一般</label> <span class="pq third_pq">(无排期要求，你很有远见和规划能力)</span>
+				<label for="third">一般</label> <span class="pq third_pq">(我做事很有远见)</span>
 				<input type="radio" id="second" name="urgency_type" value="1" />
-				<label for="second">重要</label> <span class="pq second_pq hide">(正常排期，你做事很有计划条理)</span>
+				<label for="second">重要</label> <span class="pq second_pq hide">(我做事很有计划)</span>
 				<input type="radio" id="first" name="urgency_type" value="2" />
-				<label for="first">紧急</label> <span class="pq first_pq hide">(紧急排期,插别人队可不好喔~)</span>
+				<label for="first">紧急</label> <span class="pq first_pq hide">(我做事不顾一切)</span>
 			</div>
 			<div class="am-u-sm-6 data">
-				<div class="am-u-sm-2">上线时间</div>
-				<input name="finish_time" class="Wdate" type="text" onClick="WdatePicker({minDate:'%y-%M-%d'})" style="width: 35%;">
+				<div class="am-u-sm-3">上线时间</div>
+				<input name="finish_time" class="Wdate" type="text" onClick="WdatePicker({minDate:'%y-%M-%d'})" style="width: 27%;">
 			</div>
 		</div>
 		<div class="am-g am-u-sm-12 data">
